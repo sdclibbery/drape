@@ -4,9 +4,19 @@
   <style>
     body {
       font-family: helvetica, arial;
+      background-color: black;
+    }
+    .fullscreen {
+      position:absolute;
+      top:0%;
+      left:0%;
+      width:100%;
+      height:100%;
     }
   </style>
 </head>
+<body>
+  <canvas id="canvas" class="fullscreen" style="width:100%; height:100%;"></canvas>
 <script data-main="main" src="require.js">
 /* TODO
 
@@ -20,6 +30,5 @@
 
 */
 </script>
-<body>
 </body>
 </html>
