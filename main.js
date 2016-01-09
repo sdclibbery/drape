@@ -2,6 +2,7 @@ define(function(require) {
 
 var draw = require('draw');
 var triangulate = require('triangulate');
+var touch = require('touch');
 
 var canvas = document.getElementById("canvas");
 function onResize() {
@@ -26,6 +27,13 @@ var height = function (x, y) {
 
 var mesh = triangulate(height);
 
-draw(ctxGl, canvas.width, canvas.height, mesh);
+draw(ctxGl, canvas.width, canvas.height, mesh, pitch, yaw);
+var pitch = 45;
+var yaw = 45;
+touch.move = function (x, y) {
+	yaw = x - canvas.width/2;
+	pitch = y - canvas.height/2;
+	draw(ctxGl, canvas.width, canvas.height, mesh, pitch, yaw);
+};
 
 });

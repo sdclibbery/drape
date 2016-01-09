@@ -1,5 +1,8 @@
 define(function(require) {
 
+var Matrix = require('matrix');
+var Vector = require('vector');
+
 var vtxShader = ""
 +"  uniform mat4 viewIn;"
 +"  uniform mat4 perspIn;"
@@ -8,7 +11,7 @@ var vtxShader = ""
 +"  "
 +"  void main() {"
 +"    gl_Position = perspIn * viewIn * vec4(posIn, 1);"
-+"    colour = posIn/100.0 + vec3(0.5, 0.5, 0.5);"
++"    colour = posIn*vec3(0.05,0.1,0.05) + vec3(0.5, 0.5, 0.5);"
 +"  }";
 
 var frgShader = ""
@@ -19,52 +22,6 @@ var frgShader = ""
 +"  void main() {"
 +"    gl_FragColor = vec4(colour, 1);"
 +"  }";
-
-var perspectiveMatrix = function (fovy, near, far, cw, ch) {
-    var aspect = cw / ch;
-    var f = 1.0 / Math.tan(fovy / 2);
-    var nf = 1 / (near - far);
-    var out = new Float32Array(16);
-    out[0] = f / aspect;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 0;
-    out[4] = 0;
-    out[5] = f;
-    out[6] = 0;
-    out[7] = 0;
-    out[8] = 0;
-    out[9] = 0;
-    out[10] = (far + near) * nf;
-    out[11] = -1;
-    out[12] = 0;
-    out[13] = 0;
-    out[14] = (2 * far * near) * nf;
-    out[15] = 0;
-    return out;
-};
-
-var viewMatrix = function (pitch, yaw) {
-  var d = 20;
-    var out = new Float32Array(16);
-    out[0] = 1;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 0;
-    out[4] = 0;
-    out[5] = 1;
-    out[6] = 0;
-    out[7] = 0;
-    out[8] = 0;
-    out[9] = 0;
-    out[10] = 1;
-    out[11] = 0;
-    out[12] = 0;
-    out[13] = -d*Math.sin(pitch);
-    out[14] = d*Math.cos(pitch);
-    out[15] = 1;
-    return out;
-};
 
 var loadShader = function(gl, shaderSource, shaderType) {
   var shader = gl.createShader(shaderType);
@@ -120,6 +77,15 @@ var loadVertexAttrib = function (gl, buffer, attr, data, stride) {
   gl.vertexAttribPointer(attr, stride, gl.FLOAT, false, 0, 0);
 };
 
+var viewMatrix = function (pitch, yaw) {
+  var distance = -50;
+  var i = Matrix.identity();
+  var p = Matrix.rotate(pitch, 1, 0, 0);
+  var y = Matrix.rotate(yaw, 0, 1, 0);
+  var t = Matrix.translate(0, 0, distance);
+  return i.multiply(t).multiply(p).multiply(y).transpose().m;
+};
+
 var program = null;
 var posAttr = null;
 var posBuf = null;
@@ -127,7 +93,7 @@ var indexBuffer = null;
 var viewUnif = null;
 var perspUnif = null;
 
-return function (gl, cw, ch, mesh) {
+return function (gl, cw, ch, mesh, pitch, yaw) {
   if (program === null) {
     program = loadProgram(gl, [
       loadShader(gl, vtxShader, gl.VERTEX_SHADER),
@@ -142,8 +108,8 @@ return function (gl, cw, ch, mesh) {
 
   gl.useProgram(program);
 
-  gl.uniformMatrix4fv(viewUnif, false, viewMatrix(0.1, 0));
-  gl.uniformMatrix4fv(perspUnif, false, perspectiveMatrix(1.7, 0.001, 100, cw, ch));
+  gl.uniformMatrix4fv(viewUnif, false, viewMatrix(pitch, yaw));
+  gl.uniformMatrix4fv(perspUnif, false, Matrix.perspective(1.7, 0.001, 100, cw, ch).m);
 
   loadVertexAttrib(gl, posBuf, posAttr, mesh.posns, 3);
 
