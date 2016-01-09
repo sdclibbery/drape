@@ -1,6 +1,7 @@
 define(function(require) {
 
 var draw = require('draw');
+var triangulate = require('triangulate');
 
 var canvas = document.getElementById("canvas");
 function onResize() {
@@ -23,6 +24,8 @@ var height = function (x, y) {
   return sin(x)+sin(y);
 };
 
-draw(ctxGl, canvas.width, canvas.height);
+var mesh = triangulate();
+
+draw(ctxGl, canvas.width, canvas.height, mesh);
 
 });

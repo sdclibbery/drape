@@ -19,40 +19,6 @@ var frgShader = ""
 +"    gl_FragColor = vec4(colour, 1);"
 +"  }";
 
-var resX = 50;
-var resY = 50;
-var vtxResX = resX+1;
-var vtxResY = resY+1;
-var size = 200;
-
-var numVtxs = vtxResX*vtxResY;
-var vtxPosns = new Float32Array(numVtxs*3);
-for (var y = 0; y < vtxResY; y++) {
-  for (var x = 0; x < vtxResX; x++) {
-    var v = (x + y*vtxResX) * 3;
-    vtxPosns[v+0] = (x - vtxResX/2)*size/vtxResX;
-    vtxPosns[v+1] = -10;
-    vtxPosns[v+2] = -y*size/vtxResY;
-  }
-}
-
-var numIndices = resX*resY*6;
-var indexBuffer = null;
-var indexes = new Uint16Array(numIndices);
-for (var y = 0; y < resY; y++) {
-  for (var x = 0; x < resX; x++) {
-    var i = (x + y*resX) * 6;
-    var v = x + y*vtxResX;
-    indexes[i+0] = v;
-    indexes[i+1] = v+vtxResX;
-    indexes[i+2] = v+1;
-    indexes[i+3] = v+vtxResX;
-    indexes[i+4] = v+1;
-    indexes[i+5] = v+vtxResX+1;
-  }
-}
-
-
 var perspectiveMatrix = function (fovy, near, far, cw, ch) {
     var aspect = cw / ch;
     var f = 1.0 / Math.tan(fovy / 2);
@@ -75,20 +41,6 @@ var perspectiveMatrix = function (fovy, near, far, cw, ch) {
     out[14] = (2 * far * near) * nf;
     out[15] = 0;
     return out;
-};
-
-var createIndexBuffer = function (gl, indexes) {
-  var buffer = gl.createBuffer();
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffer);
-  gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indexes, gl.STATIC_DRAW);
-  return buffer;
-};
-
-var loadVertexAttrib = function (gl, buffer, attr, data, stride) {
-  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-  gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
-  gl.enableVertexAttribArray(attr);
-  gl.vertexAttribPointer(attr, stride, gl.FLOAT, false, 0, 0);
 };
 
 var loadShader = function(gl, shaderSource, shaderType) {
@@ -131,13 +83,27 @@ var loadProgram = function(gl, shaders, opt_attribs, opt_locations) {
   return program;
 };
 
+var createIndexBuffer = function (gl, indexes) {
+  var buffer = gl.createBuffer();
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffer);
+  gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indexes, gl.STATIC_DRAW);
+  return buffer;
+};
+
+var loadVertexAttrib = function (gl, buffer, attr, data, stride) {
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+  gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
+  gl.enableVertexAttribArray(attr);
+  gl.vertexAttribPointer(attr, stride, gl.FLOAT, false, 0, 0);
+};
 
 var program = null;
 var posAttr = null;
 var posBuf = null;
+var indexBuffer = null;
 var perspUnif = null;
 
-return function (gl, cw, ch) {
+return function (gl, cw, ch, mesh) {
   if (program === null) {
     program = loadProgram(gl, [
       loadShader(gl, vtxShader, gl.VERTEX_SHADER),
@@ -146,20 +112,20 @@ return function (gl, cw, ch) {
     posBuf = gl.createBuffer();
     posAttr = gl.getAttribLocation(program, "posIn");
     perspUnif = gl.getUniformLocation(program, "perspIn");
-    indexBuffer = createIndexBuffer(gl, indexes);
+    indexBuffer = createIndexBuffer(gl, mesh.indexes);
   }
 
   gl.useProgram(program);
 
   gl.uniformMatrix4fv(perspUnif, false, perspectiveMatrix(1.7, 0.001, 100, cw, ch));
 
-  loadVertexAttrib(gl, posBuf, posAttr, vtxPosns, 3);
+  loadVertexAttrib(gl, posBuf, posAttr, mesh.posns, 3);
 
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
 
   gl.disable(gl.BLEND);
   gl.disable(gl.CULL_FACE);
-  gl.drawElements(gl.TRIANGLES, numIndices, gl.UNSIGNED_SHORT, 0);
+  gl.drawElements(gl.TRIANGLES, mesh.numIndices, gl.UNSIGNED_SHORT, 0);
 };
 
 });
