@@ -48,8 +48,8 @@ return function (height) {
       indexes[i+1] = v+vtxResX;
       indexes[i+2] = v+1;
       indexes[i+3] = v+vtxResX;
-      indexes[i+4] = v+1;
-      indexes[i+5] = v+vtxResX+1;
+      indexes[i+4] = v+vtxResX+1;
+      indexes[i+5] = v+1;
     }
   }
 
