@@ -7,11 +7,14 @@ var vtxShader = ""
 +"  uniform mat4 viewIn;"
 +"  uniform mat4 perspIn;"
 +"  attribute vec3 posIn;"
++"  attribute vec3 normIn;"
 +"  varying vec3 colour;"
 +"  "
 +"  void main() {"
 +"    gl_Position = perspIn * viewIn * vec4(posIn, 1);"
-+"    colour = posIn*vec3(0.05,0.1,0.05) + vec3(0.5, 0.5, 0.5);"
++"    vec3 light = normalize(vec3(1, 1, -1));"
++"    vec3 col = posIn*vec3(0.05,0.1,0.05) + vec3(0.5,0.5,0.5);"
++"    colour = col * dot(normIn, light);"
 +"  }";
 
 var frgShader = ""
@@ -79,7 +82,9 @@ var loadVertexAttrib = function (gl, buffer, attr, data, stride) {
 
 var program = null;
 var posAttr = null;
+var normAttr = null;
 var posBuf = null;
+var normBuf = null;
 var indexBuffer = null;
 var viewUnif = null;
 var perspUnif = null;
@@ -91,7 +96,9 @@ return function (gl, cw, ch, mesh, pitch, yaw) {
       loadShader(gl, frgShader, gl.FRAGMENT_SHADER)
     ]);
     posBuf = gl.createBuffer();
+    normBuf = gl.createBuffer();
     posAttr = gl.getAttribLocation(program, "posIn");
+    normAttr = gl.getAttribLocation(program, "normIn");
     perspUnif = gl.getUniformLocation(program, "perspIn");
     viewUnif = gl.getUniformLocation(program, "viewIn");
     indexBuffer = createIndexBuffer(gl, mesh.indexes);
@@ -103,6 +110,7 @@ return function (gl, cw, ch, mesh, pitch, yaw) {
   gl.uniformMatrix4fv(perspUnif, false, Matrix.perspective(1.1, 0.001, 100, cw, ch).m);
 
   loadVertexAttrib(gl, posBuf, posAttr, mesh.posns, 3);
+  loadVertexAttrib(gl, normBuf, normAttr, mesh.norms, 3);
 
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
 
