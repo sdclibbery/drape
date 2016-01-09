@@ -13,7 +13,7 @@ return function () {
     for (var x = 0; x < vtxResX; x++) {
       var v = (x + y*vtxResX) * 3;
       vtxPosns[v+0] = (x - vtxResX/2)*size/vtxResX;
-      vtxPosns[v+1] = -10;
+      vtxPosns[v+1] = -10 + 3*Math.sin(x/vtxResX*30) + 3*Math.sin(y/vtxResY*30);
       vtxPosns[v+2] = -y*size/vtxResY;
     }
   }
