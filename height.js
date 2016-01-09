@@ -41,7 +41,8 @@ var cube = function (size) {
 };
 
 return drape([
-              rotate(PI/4, cube(10))
+              rotate(PI/4, cube(10)),
+              translate(5, 5, cube(12))
 //              sweep(ellipse(3, 5)).from(-10,-10).to(10,10)
             ]);
 
