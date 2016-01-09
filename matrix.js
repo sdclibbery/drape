@@ -174,6 +174,14 @@ Matrix.identity = function(result) {
   return result;
 };
 
+Matrix.arcBallView = function (distance, pitch, yaw) {
+  var i = Matrix.identity();
+  var p = Matrix.rotate(pitch, 1, 0, 0);
+  var y = Matrix.rotate(yaw, 0, 1, 0);
+  var t = Matrix.translate(0, 0, distance);
+  return i.multiply(t).multiply(p).multiply(y).transpose().m;
+};
+
 Matrix.perspective = function (fovy, near, far, cw, ch, result) {
   result = result || new Matrix();
   var m = result.m;

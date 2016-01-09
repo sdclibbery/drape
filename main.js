@@ -27,12 +27,15 @@ var height = function (x, y) {
 
 var mesh = triangulate(height);
 
-draw(ctxGl, canvas.width, canvas.height, mesh, pitch, yaw);
 var pitch = 45;
 var yaw = 45;
+var touchx, touchy;
+draw(ctxGl, canvas.width, canvas.height, mesh, pitch, yaw);
+touch.start = function (x, y) { touchx = x; touchy = y; }
 touch.move = function (x, y) {
-	yaw = x - canvas.width/2;
-	pitch = y - canvas.height/2;
+	yaw += (x - touchx)/2;
+	pitch += (y - touchy)/2;
+	touchx = x; touchy = y;
 	draw(ctxGl, canvas.width, canvas.height, mesh, pitch, yaw);
 };
 

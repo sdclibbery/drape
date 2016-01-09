@@ -77,15 +77,6 @@ var loadVertexAttrib = function (gl, buffer, attr, data, stride) {
   gl.vertexAttribPointer(attr, stride, gl.FLOAT, false, 0, 0);
 };
 
-var viewMatrix = function (pitch, yaw) {
-  var distance = -50;
-  var i = Matrix.identity();
-  var p = Matrix.rotate(pitch, 1, 0, 0);
-  var y = Matrix.rotate(yaw, 0, 1, 0);
-  var t = Matrix.translate(0, 0, distance);
-  return i.multiply(t).multiply(p).multiply(y).transpose().m;
-};
-
 var program = null;
 var posAttr = null;
 var posBuf = null;
@@ -108,8 +99,8 @@ return function (gl, cw, ch, mesh, pitch, yaw) {
 
   gl.useProgram(program);
 
-  gl.uniformMatrix4fv(viewUnif, false, viewMatrix(pitch, yaw));
-  gl.uniformMatrix4fv(perspUnif, false, Matrix.perspective(1.7, 0.001, 100, cw, ch).m);
+  gl.uniformMatrix4fv(viewUnif, false, Matrix.arcBallView(-60, pitch, yaw));
+  gl.uniformMatrix4fv(perspUnif, false, Matrix.perspective(1.1, 0.001, 100, cw, ch).m);
 
   loadVertexAttrib(gl, posBuf, posAttr, mesh.posns, 3);
 
