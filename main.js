@@ -21,10 +21,10 @@ ctxGl.depthFunc(ctxGl.LEQUAL);
 ctxGl.clear(ctxGl.COLOR_BUFFER_BIT|ctxGl.DEPTH_BUFFER_BIT);
 
 var height = function (x, y) {
-  return sin(x)+sin(y);
+  return Math.sin(x) + Math.sin(y);
 };
 
-var mesh = triangulate();
+var mesh = triangulate(height);
 
 draw(ctxGl, canvas.width, canvas.height, mesh);
 

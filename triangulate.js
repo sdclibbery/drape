@@ -1,20 +1,22 @@
 define(function(require) {
 
-return function () {
+return function (height) {
   var resX = 50;
   var resY = 50;
   var vtxResX = resX+1;
   var vtxResY = resY+1;
-  var size = 200;
+  var size = 50;
 
   var numVtxs = vtxResX*vtxResY;
   var vtxPosns = new Float32Array(numVtxs*3);
   for (var y = 0; y < vtxResY; y++) {
     for (var x = 0; x < vtxResX; x++) {
       var v = (x + y*vtxResX) * 3;
-      vtxPosns[v+0] = (x - vtxResX/2)*size/vtxResX;
-      vtxPosns[v+1] = -10 + 3*Math.sin(x/vtxResX*30) + 3*Math.sin(y/vtxResY*30);
-      vtxPosns[v+2] = -y*size/vtxResY;
+      var xpos = (x - vtxResX/2)*size/vtxResX;
+      var zpos = -y*size/vtxResY
+      vtxPosns[v+0] = xpos;
+      vtxPosns[v+1] = height(xpos, zpos);
+      vtxPosns[v+2] = zpos;
     }
   }
 
