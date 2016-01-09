@@ -1,12 +1,13 @@
 define(function(require) {
 
 var vtxShader = ""
++"  uniform mat4 viewIn;"
 +"  uniform mat4 perspIn;"
 +"  attribute vec3 posIn;"
 +"  varying vec3 colour;"
 +"  "
 +"  void main() {"
-+"    gl_Position = perspIn * vec4(posIn, 1);"
++"    gl_Position = perspIn * viewIn * vec4(posIn, 1);"
 +"    colour = posIn/100.0 + vec3(0.5, 0.5, 0.5);"
 +"  }";
 
@@ -40,6 +41,28 @@ var perspectiveMatrix = function (fovy, near, far, cw, ch) {
     out[13] = 0;
     out[14] = (2 * far * near) * nf;
     out[15] = 0;
+    return out;
+};
+
+var viewMatrix = function (pitch, yaw) {
+  var d = 20;
+    var out = new Float32Array(16);
+    out[0] = 1;
+    out[1] = 0;
+    out[2] = 0;
+    out[3] = 0;
+    out[4] = 0;
+    out[5] = 1;
+    out[6] = 0;
+    out[7] = 0;
+    out[8] = 0;
+    out[9] = 0;
+    out[10] = 1;
+    out[11] = 0;
+    out[12] = 0;
+    out[13] = -d*Math.sin(pitch);
+    out[14] = d*Math.cos(pitch);
+    out[15] = 1;
     return out;
 };
 
@@ -101,6 +124,7 @@ var program = null;
 var posAttr = null;
 var posBuf = null;
 var indexBuffer = null;
+var viewUnif = null;
 var perspUnif = null;
 
 return function (gl, cw, ch, mesh) {
@@ -112,11 +136,13 @@ return function (gl, cw, ch, mesh) {
     posBuf = gl.createBuffer();
     posAttr = gl.getAttribLocation(program, "posIn");
     perspUnif = gl.getUniformLocation(program, "perspIn");
+    viewUnif = gl.getUniformLocation(program, "viewIn");
     indexBuffer = createIndexBuffer(gl, mesh.indexes);
   }
 
   gl.useProgram(program);
 
+  gl.uniformMatrix4fv(viewUnif, false, viewMatrix(0.1, 0));
   gl.uniformMatrix4fv(perspUnif, false, perspectiveMatrix(1.7, 0.001, 100, cw, ch));
 
   loadVertexAttrib(gl, posBuf, posAttr, mesh.posns, 3);

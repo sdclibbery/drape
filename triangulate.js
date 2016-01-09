@@ -13,7 +13,7 @@ return function (height) {
     for (var x = 0; x < vtxResX; x++) {
       var v = (x + y*vtxResX) * 3;
       var xpos = (x - vtxResX/2)*size/vtxResX;
-      var zpos = -y*size/vtxResY
+      var zpos = (y - vtxResY/2)*size/vtxResY;
       vtxPosns[v+0] = xpos;
       vtxPosns[v+1] = height(xpos, zpos);
       vtxPosns[v+2] = zpos;
