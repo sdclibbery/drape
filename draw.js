@@ -116,6 +116,7 @@ return function (gl, cw, ch, mesh, pitch, yaw) {
   gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
 
   gl.disable(gl.BLEND);
+  gl.enable(gl.DEPTH_TEST);
   gl.disable(gl.CULL_FACE);
   gl.drawElements(gl.TRIANGLES, mesh.numIndices, gl.UNSIGNED_SHORT, 0);
 };
