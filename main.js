@@ -3,6 +3,13 @@ define(function(require) {
 var draw = require('draw');
 
 var canvas = document.getElementById("canvas");
+function onResize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+};
+window.addEventListener('resize', onResize, false);
+onResize();
+
 var ctxGl = canvas.getContext("webgl");
 if (!ctxGl) { ctxGl = canvas.getContext("experimental-webgl"); }
 if (!ctxGl) { document.getElementById('info').innerHTML = 'WebGL not supported!'; }
