@@ -12,9 +12,10 @@ var vtxShader = ""
 +"  "
 +"  void main() {"
 +"    gl_Position = perspIn * viewIn * vec4(posIn, 1);"
-+"    vec3 light = normalize(vec3(1, 1, -1));"
++"    vec3 light = vec3(0.3, 0.3, -0.3);"
++"    vec3 ambient = vec3(0.3, 0.3, 0.3);"
 +"    vec3 col = posIn*vec3(0.05,0.1,0.05) + vec3(0.5,0.5,0.5);"
-+"    colour = col * dot(normIn, light);"
++"    colour = col * (ambient + dot(normIn, light));"
 +"  }";
 
 var frgShader = ""
