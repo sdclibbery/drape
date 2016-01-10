@@ -2,18 +2,7 @@ define(function(require) {
 
 var Vector = require('vector');
 
-var normal = function (height, x, z) {
-  var eps = 0.0001;
-  var dx = (height(x+eps, z) - height(x-eps, z)) / (eps*2);
-  var dz = (height(x, z+eps) - height(x, z-eps)) / (eps*2);
-  return new Vector(
-    dx,
-    1,
-    dz
-  ).unit();
-};
-
-return function (height) {
+return function (surface) {
   var resX = 50;
   var resY = 50;
   var vtxResX = resX+1;
@@ -28,13 +17,13 @@ return function (height) {
       var v = (x + y*vtxResX) * 3;
       var xpos = (x - vtxResX/2)*size/vtxResX;
       var zpos = (y - vtxResY/2)*size/vtxResY;
-      vtxPosns[v+0] = xpos;
-      vtxPosns[v+1] = height(xpos, zpos);
-      vtxPosns[v+2] = zpos;
-      var n = normal(height, xpos, zpos)
-      vtxNorms[v+0] = n.x;
-      vtxNorms[v+1] = n.y;
-      vtxNorms[v+2] = n.z;
+      var s = surface(xpos, zpos);
+      vtxPosns[v+0] = s.pos.x;
+      vtxPosns[v+1] = s.pos.z;
+      vtxPosns[v+2] = s.pos.y;
+      vtxNorms[v+0] = s.norm.x;
+      vtxNorms[v+1] = s.norm.z;
+      vtxNorms[v+2] = s.norm.y;
     }
   }
 

@@ -1,5 +1,7 @@
 define(function(require) {
 
+var Vector = require('vector');
+
 var PI = Math.PI;
 var abs = Math.abs;
 var min = Math.min;
@@ -9,14 +11,39 @@ var cos = Math.cos;
 var sqrt = Math.sqrt;
 var inf = Infinity;
 
+var bottom = function (x, y) {
+  return {
+    pos: new Vector(x,y,0),
+    norm: new Vector(0,0,0) // No surface here!
+  };
+}
+
 var drape = function (items) {
   return function (x,y) {
-    return items.reduce(function (h, f) {
-      return max(h, f(x, y));
-    }, 0);
+    return items.reduce(function (v, f) {
+      var s = f(x, y);
+      return (s.pos.z > v.pos.z) ? s : v;
+    }, bottom(x,y));
   };
 };
 
+var cube = function (size) {
+  return function (x, y) {
+    if (abs(x) <= size/2 && abs(y) <= size/2) {
+//      var nearestToY = abs(x) > abs(y);
+      return {
+        pos: new Vector(x,y,size),
+        norm: new Vector(0,0,1),
+//        tangent: new Vector(0,0, 0),
+        tangentCurvature: 0,
+        cotangentCurvature: 0
+      };
+    }
+    return bottom(x,y);
+  };
+};
+
+/*
 var translate = function (tx, ty, f) {
   return function (x,y) {
     return f(x-tx, y-ty);
@@ -32,13 +59,6 @@ var rotate = function (a, f) {
 var scale = function (s, f) {
   return function (x,y) {
     return f(x/s, y/s);
-  };
-};
-
-var cube = function (size) {
-  return function (x, y) {
-    if (abs(x) <= size/2 && abs(y) <= size/2) { return size; }
-    return 0;
   };
 };
 
@@ -78,11 +98,12 @@ var sweep = function (path, profile) {
     return profile(dist);
   };
 };
-
+*/
 return drape([
-//              rotate(PI/4, cube(10)),
+              cube(10)
+//              rotate(PI/4, cube(10))
 //              translate(5, 5, cube(12))
-              sweep(line(-10,-10, 10,10), ellipse(3, 5))
+//              sweep(line(-10,-10, 10,10), ellipse(3, 5))
             ]);
 
 });
