@@ -3,7 +3,7 @@ define(function(require) {
 var draw = require('draw');
 var triangulate = require('triangulate');
 var touch = require('touch');
-var height = require('height');
+var surface = require('surface');
 
 var canvas = document.getElementById("canvas");
 function onResize() {
@@ -17,7 +17,7 @@ var ctxGl = canvas.getContext("webgl");
 if (!ctxGl) { ctxGl = canvas.getContext("experimental-webgl"); }
 if (!ctxGl) { document.getElementById('info').innerHTML = 'WebGL not supported!'; }
 
-var mesh = triangulate(height);
+var mesh = triangulate(surface);
 
 var pitch = 45;
 var yaw = 45;

@@ -14,8 +14,8 @@ var normal = function (height, x, z) {
 };
 
 return function (height) {
-  var resX = 100;
-  var resY = 100;
+  var resX = 50;
+  var resY = 50;
   var vtxResX = resX+1;
   var vtxResY = resY+1;
   var size = 50;
