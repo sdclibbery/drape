@@ -1,19 +1,8 @@
 define(function(require) {
 
 var prim = require('modelling/primitives');
+var csg = require('modelling/csg');
 var bottom = require('modelling/bottom');
-
-var sin = Math.sin;
-var cos = Math.cos;
-
-var union = function (items) {
-  return function (x,y) {
-    return items.reduce(function (v, f) {
-      var s = f(x, y);
-      return (s.pos.z > v.pos.z) ? s : v;
-    }, bottom(x,y));
-  };
-};
 
 /*
 var translate = function (tx, ty, f) {
@@ -21,6 +10,9 @@ var translate = function (tx, ty, f) {
     return f(x-tx, y-ty);
   };
 };
+
+var sin = Math.sin;
+var cos = Math.cos;
 
 var rotate = function (a, f) {
   return function (x,y) {
@@ -33,9 +25,9 @@ var scale = function (s, f) {
     return f(x/s, y/s);
   };
 };
-
 */
-return union([
+
+return csg.union([
 //              prim.cube(10)
               prim.sphere(10)
 //              rotate(PI/4, prim.cube(10))
