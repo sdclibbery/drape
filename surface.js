@@ -18,7 +18,7 @@ var bottom = function (x, y) {
   };
 }
 
-var drape = function (items) {
+var union = function (items) {
   return function (x,y) {
     return items.reduce(function (v, f) {
       var s = f(x, y);
@@ -117,7 +117,7 @@ var sweep = function (path, profile) {
   };
 };
 */
-return drape([
+return union([
 //              cube(10)
               sphere(10)
 //              rotate(PI/4, cube(10))
