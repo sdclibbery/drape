@@ -2,6 +2,12 @@ define(function(require) {
 
 var Vector = require('vector');
 
+var gcodeToGl = function (arr, i, v) {
+  arr[i+0] = v.x;
+  arr[i+1] = v.z;
+  arr[i+2] = v.y;
+};
+
 return function (surface) {
   var resX = 50;
   var resY = 50;
@@ -18,12 +24,8 @@ return function (surface) {
       var xpos = (x - vtxResX/2)*size/vtxResX;
       var zpos = (y - vtxResY/2)*size/vtxResY;
       var s = surface(xpos, zpos);
-      vtxPosns[v+0] = s.pos.x;
-      vtxPosns[v+1] = s.pos.z;
-      vtxPosns[v+2] = s.pos.y;
-      vtxNorms[v+0] = s.norm.x;
-      vtxNorms[v+1] = s.norm.z;
-      vtxNorms[v+2] = s.norm.y;
+      gcodeToGl(vtxPosns, v, s.pos);
+      gcodeToGl(vtxNorms, v, s.norm);
     }
   }
 
