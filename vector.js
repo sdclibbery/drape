@@ -11,6 +11,8 @@ function Vector(x, y, z) {
   this.z = z || 0;
 }
 
+var EPS = 1e-10;
+
 // ### Instance Methods
 // The methods `add()`, `subtract()`, `multiply()`, and `divide()` can all
 // take either a vector or a number as an argument.
@@ -39,6 +41,9 @@ Vector.prototype = {
   },
   dot: function(v) {
     return this.x * v.x + this.y * v.y + this.z * v.z;
+  },
+  perpTo: function(v) {
+    return Math.abs(this.dot(v)) < EPS;
   },
   cross: function(v) {
     return new Vector(

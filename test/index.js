@@ -13,6 +13,5 @@ define = function(f) {
 // End of require patch
 //---------
 
-var bottom = webRequire('modelling/bottom');
-
-console.log('hello '+bottom(5,6).pos.y);
+// Test modules
+webRequire('test/primitives')();
