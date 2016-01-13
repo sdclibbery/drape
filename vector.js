@@ -45,6 +45,9 @@ Vector.prototype = {
   perpTo: function(v) {
     return Math.abs(this.dot(v)) < EPS;
   },
+  equalTo: function(v) {
+    return Math.abs(this.dot(v)) > 1-EPS;
+  },
   cross: function(v) {
     return new Vector(
       this.y * v.z - this.z * v.y,
