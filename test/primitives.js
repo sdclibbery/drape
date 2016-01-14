@@ -8,7 +8,7 @@ var assert = function (surf, pred, m) {
 };
 
 var commonProperies = function (surf) {
-  assert(surf, s => s.norm.perpTo(s.tangent), 'norm _|_ tangent');
+  assert(surf, s => s.norm.perpTo(s.cutDir), 'norm _|_ cutDir');
 };
 
 var testCube = function () {
@@ -20,16 +20,16 @@ var testCube = function () {
     var surf = cube(x,y)
     commonProperies(surf);
     assert(surf, s => s.norm.z === 1, 'normal always points up');
-    // tangent is always clockwise and on an axis
-    assert(surf, s => s.tangentCurvature === 0, 'curvature is zero');
-    assert(surf, s => s.cotangentCurvature === 0, 'perp curvature is zero');
+    assert(surf, s => s.cutCurvature === 0, 'curvature is zero');
+    assert(surf, s => s.perpCurvature === 0, 'perp curvature is zero');
+    // cutDir is always clockwise and on an axis
   }
 };
 
 // Sphere
- // norm _|_ tangent
+ // norm _|_ cutDir
  // norm is direction to point
- // tangent is always pointing around the sphere (z cpt is zero)
+ // cutDir is always pointing around the sphere (z cpt is zero)
  // pos distance from ctr pt is always radius
  // curvature..?
 

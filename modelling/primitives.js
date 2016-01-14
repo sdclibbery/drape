@@ -23,9 +23,9 @@ primitives.cube = function (size) {
     return {
       pos: new vector(x,y,size),
       norm: new vector(0,0,1),
-      tangent: new vector(tanX, tanY, 0),
-      tangentCurvature: 0,
-      cotangentCurvature: 0
+      cutDir: new vector(tanX, tanY, 0),
+      cutCurvature: 0,
+      perpCurvature: 0
     };
   };
 };
@@ -41,9 +41,9 @@ primitives.sphere = function (radius) {
       pos: pos,
       norm: pos.unit(),
 // ! need to sort these and think about testing. How about some property based testing? eg test norm is perp to tan etc
-//      tangent: new vector(),
-//      tangentCurvature: ,
-//      cotangentCurvature: 
+//      cutDir: new vector(),
+//      cutCurvature: ,
+//      perpCurvature: 
     };
   };
 };
