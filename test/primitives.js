@@ -3,12 +3,16 @@ define(function(require) {
 var prim = require('modelling/primitives');
 var vector = require('vector');
 
+var abs = Math.abs;
+
 var assert = function (surf, pred, m) {
   if (!pred(surf)) { console.log(m+' at '+surf.pos.x.toFixed(3)+', '+surf.pos.y.toFixed(3)+', '+surf.pos.z.toFixed(3)); }
 };
 
 var commonProperies = function (surf) {
   assert(surf, s => s.norm.perpTo(s.cutDir), 'norm _|_ cutDir');
+  assert(surf, s => s.norm.isUnit(), 'norm is unit');
+  assert(surf, s => s.cutDir.isUnit(), 'cutDir is unit');
 };
 
 var testCube = function () {
@@ -22,7 +26,8 @@ var testCube = function () {
     assert(surf, s => s.norm.z === 1, 'normal always points up');
     assert(surf, s => s.cutCurvature === 0, 'curvature is zero');
     assert(surf, s => s.perpCurvature === 0, 'perp curvature is zero');
-    // cutDir is always clockwise and on an axis
+    assert(surf, s => abs(s.cutDir.x) === 0 || abs(s.cutDir.y) === 0, 'cutDir always on an axis');
+    // cutDir is always clockwise 
   }
 };
 

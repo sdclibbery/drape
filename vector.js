@@ -61,6 +61,9 @@ Vector.prototype = {
   unit: function() {
     return this.divide(this.length());
   },
+  isUnit: function () {
+    return Math.abs(this.length() - 1) < EPS;
+  },
   min: function() {
     return Math.min(Math.min(this.x, this.y), this.z);
   },
