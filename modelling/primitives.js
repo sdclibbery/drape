@@ -5,6 +5,7 @@ var bottom = require('modelling/bottom');
 
 var PI = Math.PI;
 var abs = Math.abs;
+var sign = Math.sign;
 var min = Math.min;
 var max = Math.max;
 var sin = Math.sin;
@@ -17,13 +18,13 @@ var primitives = {};
 primitives.cube = function (size) {
   return function (x, y) {
     if (abs(x) > size/2 || abs(y) > size/2) { return bottom(x,y); }
-    var nearestToY = abs(x) > abs(y);
-    var tanX = nearestToY ? 0 : 1;
-    var tanY = nearestToY ? 1 : 0;
+    var nearestToXAxis = abs(x) > abs(y);
+    var cutX = nearestToXAxis ? 0 : sign(y);
+    var cutY = nearestToXAxis ? -sign(x) : 0;
     return {
       pos: new vector(x,y,size),
       norm: new vector(0,0,1),
-      cutDir: new vector(tanX, tanY, 0),
+      cutDir: new vector(cutX, cutY, 0),
       cutCurvature: 0,
       perpCurvature: 0
     };
@@ -43,7 +44,7 @@ primitives.sphere = function (radius) {
 // ! need to sort these and think about testing. How about some property based testing? eg test norm is perp to tan etc
 //      cutDir: new vector(),
 //      cutCurvature: ,
-//      perpCurvature: 
+//      perpCurvature:
     };
   };
 };
@@ -59,7 +60,7 @@ var ellipse = function (hw, hh) {
 
 primitives.line = function (x1, y1, x2, y2) {
   return function (x,y) {
-    // calculate perpendicular distance from 
+    // calculate perpendicular distance from
     var A = x - x1;
     var B = y - y1;
     var C = x2 - x1;

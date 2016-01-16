@@ -5,8 +5,12 @@ var vector = require('vector');
 
 var abs = Math.abs;
 
+var v2s = function (v) {
+  return '(' + v.x.toFixed(3) + ',' + v.y.toFixed(3) + ','+v.z.toFixed(3) + ')';
+};
+
 var assert = function (surf, pred, m) {
-  if (!pred(surf)) { console.log(m+' at '+surf.pos.x.toFixed(3)+', '+surf.pos.y.toFixed(3)+', '+surf.pos.z.toFixed(3)); }
+  if (!pred(surf)) { console.log(m+' at ' + v2s(surf.pos) + ' cut: ' + v2s(surf.cutDir)); }
 };
 
 var commonProperies = function (surf) {
@@ -27,7 +31,7 @@ var testCube = function () {
     assert(surf, s => s.cutCurvature === 0, 'curvature is zero');
     assert(surf, s => s.perpCurvature === 0, 'perp curvature is zero');
     assert(surf, s => abs(s.cutDir.x) === 0 || abs(s.cutDir.y) === 0, 'cutDir always on an axis');
-    // cutDir is always clockwise 
+    assert(surf, s => s.pos.z == 0 || s.cutDir.cross(s.pos).z > 0, 'cutDir is clockwise');
   }
 };
 
