@@ -1,6 +1,6 @@
 define(function(require) {
 
-var draw = require('draw');
+var drawMesh = require('drawMesh');
 var triangulate = require('triangulate');
 var touch = require('touch');
 var surface = require('surface');
@@ -22,13 +22,13 @@ var mesh = triangulate(surface);
 var pitch = 45;
 var yaw = 45;
 var touchx, touchy;
-draw(ctxGl, canvas.width, canvas.height, mesh, pitch, yaw);
+drawMesh(ctxGl, canvas.width, canvas.height, mesh, pitch, yaw);
 touch.start = function (x, y) { touchx = x; touchy = y; }
 touch.move = function (x, y) {
 	yaw += (x - touchx)/2;
 	pitch += (y - touchy)/2;
 	touchx = x; touchy = y;
-	draw(ctxGl, canvas.width, canvas.height, mesh, pitch, yaw);
+	drawMesh(ctxGl, canvas.width, canvas.height, mesh, pitch, yaw);
 };
 
 });
