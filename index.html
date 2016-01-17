@@ -33,19 +33,22 @@ o New plan
  o Then take a sample grid and perturb it based on curvature and feature detection (and tool size/shape?)
  o Then generate vector field and join up into tool path.
  o Then triangulate toolpath to give renderable mesh.
-* Return surface info at each 2D point, not just height
- x Rename height module
- x Rename: tangent->cutDir, cotangent to perpDir
- x Return basis and curvature for cube
-  x tests
- * Visualise cut direction vector field
- * Primitive evaluation performance common test
- * Return basis and curvature for sphere
-  * tests
- * tests for csg union
- * Use surface info normal for mesh, dont regenerate
- * Transform basis/curvature for modifiers (rotate, translate etc)
- * Return basis/curvature for sweep
+! Return surface info at each 2D point, not just height:
+x Rename height module
+x Rename: tangent->cutDir, cotangent to perpDir
+x Return basis and curvature for cube
+x tests
+* Visualise cut direction vector field
+ * Add arrow heads
+* Refactor out duplication in draw* modules
+* Refactor: generate grid of surface points and then triangulate/cutlines that
+* Primitive evaluation performance common test
+* Return basis and curvature for sphere
+* tests
+* tests for csg union
+* Use surface info normal for mesh, dont regenerate
+* Transform basis/curvature for modifiers (rotate, translate etc)
+* Return basis/curvature for sweep
 * Modify sweep to scale the profile along the path
  * Define the way the profile changes
  * Need to modify basis and curvature too
