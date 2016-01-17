@@ -96,8 +96,8 @@ return function (gl, cw, ch, lines, pitch, yaw) {
 
   gl.useProgram(program);
 
-  gl.uniformMatrix4fv(viewUnif, false, Matrix.arcBallView(-60, pitch, yaw));
-  gl.uniformMatrix4fv(perspUnif, false, Matrix.perspective(1.1, 0.001, 100, cw, ch).m);
+  gl.uniformMatrix4fv(viewUnif, false, Matrix.arcBallView(-1, pitch, yaw));
+  gl.uniformMatrix4fv(perspUnif, false, Matrix.perspective(1.1, 0.001, 10, cw, ch).m);
 
   loadVertexAttrib(gl, posBuf, posAttr, lines.posns, 3);
 
@@ -105,7 +105,6 @@ return function (gl, cw, ch, lines, pitch, yaw) {
 
   gl.disable(gl.BLEND);
   gl.enable(gl.DEPTH_TEST);
-  gl.lineWidth(1.0);
   gl.drawElements(gl.LINES, lines.numIndices, gl.UNSIGNED_SHORT, 0);
 };
 });

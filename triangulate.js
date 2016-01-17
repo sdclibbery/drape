@@ -13,11 +13,11 @@ return function (surface) {
   var resY = 50;
   var vtxResX = resX+1;
   var vtxResY = resY+1;
-  var size = 50;
+  var size = 0.5;
 
   var numVtxs = vtxResX*vtxResY;
   var vtxNorms = new Float32Array(numVtxs*3);
-  var vtxPosns = new Float32Array(numVtxs*3);  
+  var vtxPosns = new Float32Array(numVtxs*3);
   for (var y = 0; y < vtxResY; y++) {
     for (var x = 0; x < vtxResX; x++) {
       var v = (x + y*vtxResX) * 3;

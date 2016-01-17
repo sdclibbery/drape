@@ -14,7 +14,7 @@ var vtxShader = ""
 +"    gl_Position = perspIn * viewIn * vec4(posIn, 1);"
 +"    vec3 light = vec3(0.3, 0.3, -0.3);"
 +"    vec3 ambient = vec3(0.3, 0.3, 0.3);"
-+"    vec3 col = posIn*vec3(0.05,0,0.05) + vec3(0.5,0.5,0.5);"
++"    vec3 col = posIn*vec3(5,0,5) + vec3(0.5,0.5,0.5);"
 +"    colour = col * (ambient + dot(normIn, light));"
 +"  }";
 
@@ -107,8 +107,8 @@ return function (gl, cw, ch, mesh, pitch, yaw) {
 
   gl.useProgram(program);
 
-  gl.uniformMatrix4fv(viewUnif, false, Matrix.arcBallView(-60, pitch, yaw));
-  gl.uniformMatrix4fv(perspUnif, false, Matrix.perspective(1.1, 0.001, 100, cw, ch).m);
+  gl.uniformMatrix4fv(viewUnif, false, Matrix.arcBallView(-1, pitch, yaw));
+  gl.uniformMatrix4fv(perspUnif, false, Matrix.perspective(1.1, 0.001, 10, cw, ch).m);
 
   loadVertexAttrib(gl, posBuf, posAttr, mesh.posns, 3);
   loadVertexAttrib(gl, normBuf, normAttr, mesh.norms, 3);

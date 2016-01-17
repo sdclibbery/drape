@@ -11,7 +11,7 @@ var gcodeToGl = function (arr, i, v) {
 return function (surface) {
   var resX = 50;
   var resY = 50;
-  var size = 50;
+  var size = 0.5;
 
   var numVtxs = resX*resY*2;
   var vtxPosns = new Float32Array(numVtxs*3);
@@ -21,7 +21,7 @@ return function (surface) {
       var posx = (x - resX/2)*size/resX;
       var posy = (y - resY/2)*size/resY;
       var s = surface(posx, posy);
-      s.pos.z += 0.2;
+      s.pos.z += 0.003;
       gcodeToGl(vtxPosns, v, s.pos);
       gcodeToGl(vtxPosns, v+3, s.pos.add(s.cutDir.multiply(size*0.8/resX)));
     }
