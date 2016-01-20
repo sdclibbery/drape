@@ -28,7 +28,7 @@ var indexBuffer = null;
 var viewUnif = null;
 var perspUnif = null;
 
-return function (gl, cw, ch, lines, pitch, yaw) {
+return function (gl, lines, view, perspective) {
   if (program === null) {
     program = draw.loadProgram(gl, [
       draw.loadShader(gl, vtxShader, gl.VERTEX_SHADER),
@@ -43,8 +43,8 @@ return function (gl, cw, ch, lines, pitch, yaw) {
 
   gl.useProgram(program);
 
-  gl.uniformMatrix4fv(viewUnif, false, Matrix.arcBallView(-1, pitch, yaw));
-  gl.uniformMatrix4fv(perspUnif, false, Matrix.perspective(1.1, 0.001, 10, cw, ch).m);
+  gl.uniformMatrix4fv(viewUnif, false, view);
+  gl.uniformMatrix4fv(perspUnif, false, perspective.m);
 
   draw.loadVertexAttrib(gl, posBuf, posAttr, lines.posns, 3);
 

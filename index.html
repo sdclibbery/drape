@@ -44,10 +44,11 @@ x Visualise cut direction vector field
  x Shader loading etc
  x Buffer setup
  * Camera module
-* Refactor: generate grid of surface points and then triangulate/cutlines that
-* Define an (initially uniform) sample grid
-* pinch to move camera in/out
+  * Take cw/ch (and gl..???) out of the args to the drawing functions (and obviously pitch/yaw too :-)
+* Pinch to move camera in/out
 * Two finger drag to pan
+* Refactor: generate grid of surface points and then triangulate/cutlines that
+ * Define an (initially uniform) sample grid
 * Return basis and curvature for sphere
  * tests
 * Tests for csg union

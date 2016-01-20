@@ -5,6 +5,7 @@ var drawLines = require('drawLines');
 var triangulate = require('triangulate');
 var cutLines = require('cutlines');
 var touch = require('touch');
+var camera = require('camera');
 var surface = require('surface');
 
 var canvas = document.getElementById("canvas");
@@ -25,15 +26,20 @@ var lines = cutLines(surface);
 var pitch = 45;
 var yaw = 45;
 var touchx, touchy;
-drawMesh(ctxGl, canvas.width, canvas.height, mesh, pitch, yaw);
-drawLines(ctxGl, canvas.width, canvas.height, lines, pitch, yaw);
+
+var render = function () {
+  camera.set(canvas.width, canvas.height, yaw, pitch);
+  drawMesh(ctxGl, mesh, camera.view, camera.perspective);
+  drawLines(ctxGl, lines, camera.view, camera.perspective);
+};
+render();
+
 touch.start = function (x, y) { touchx = x; touchy = y; }
 touch.move = function (x, y) {
 	yaw += (x - touchx)/2;
 	pitch += (y - touchy)/2;
 	touchx = x; touchy = y;
-	drawMesh(ctxGl, canvas.width, canvas.height, mesh, pitch, yaw);
-  drawLines(ctxGl, canvas.width, canvas.height, lines, pitch, yaw);
+  render();
 };
 
 });
