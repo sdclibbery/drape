@@ -9,11 +9,11 @@ var touch = {
 var mousedown = false;
 window.onmousedown = function (evt) {
   mousedown = true;
-  touch.start(evt.clientX, evt.clientY);
+  touch.start([{x: evt.clientX, y: evt.clientY}]);
 };
 window.onmousemove = function (evt) {
   if (mousedown) {
-    touch.move(evt.clientX, evt.clientY);
+    touch.move([{x: evt.clientX, y: evt.clientY}]);
   }
 };
 window.onmouseup = function (evt) {
@@ -23,11 +23,11 @@ window.onmouseup = function (evt) {
 
 window.addEventListener("touchstart", function (evt) {
   evt.preventDefault();
-  touch.start(evt.changedTouches[0].clientX, evt.changedTouches[0].clientY);
+  touch.start([{x: evt.changedTouches[0].clientX, y: evt.changedTouches[0].clientY}]);
 });
 window.addEventListener("touchmove", function (evt) {
   evt.preventDefault();
-  touch.move(evt.changedTouches[0].clientX, evt.changedTouches[0].clientY);
+  touch.move([{x: evt.changedTouches[0].clientX, y: evt.changedTouches[0].clientY}]);
 });
 window.addEventListener("touchend", function (evt) {
   evt.preventDefault();

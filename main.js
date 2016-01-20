@@ -32,10 +32,11 @@ var render = function () {
 };
 render();
 
-touch.start = function (x, y) { touchx = x; touchy = y; }
-touch.move = function (x, y) {
-	camera.drag(x - touchx, y - touchy);
-	touchx = x; touchy = y;
+touch.start = function (touches) { touchx = touches[0].x; touchy = touches[0].y; }
+touch.move = function (touches) {
+	camera.drag(touches[0].x - touchx, touches[0].y - touchy);
+	touchx = touches[0].x;
+  touchy = touches[0].y;
   render();
 };
 
