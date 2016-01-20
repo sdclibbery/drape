@@ -23,21 +23,18 @@ if (!ctxGl) { document.getElementById('info').innerHTML = 'WebGL not supported!'
 var mesh = triangulate(surface);
 var lines = cutLines(surface);
 
-var pitch = 45;
-var yaw = 45;
 var touchx, touchy;
 
 var render = function () {
-  camera.set(canvas.width, canvas.height, yaw, pitch);
-  drawMesh(ctxGl, mesh, camera.view, camera.perspective);
-  drawLines(ctxGl, lines, camera.view, camera.perspective);
+  var ms = camera.toMatrices(canvas.width, canvas.height);
+  drawMesh(ctxGl, mesh, ms.view, ms.perspective);
+  drawLines(ctxGl, lines, ms.view, ms.perspective);
 };
 render();
 
 touch.start = function (x, y) { touchx = x; touchy = y; }
 touch.move = function (x, y) {
-	yaw += (x - touchx)/2;
-	pitch += (y - touchy)/2;
+	camera.drag(x - touchx, y - touchy);
 	touchx = x; touchy = y;
   render();
 };
