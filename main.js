@@ -35,12 +35,4 @@ touch.pan = function (dx, dy) {
   render();
 };
 
-var touchx, touchy;
-touch.start = function (touches) { touchx = touches[0].x; touchy = touches[0].y; }
-touch.move = function (touches) {
-	touch.pan(touches[0].x - touchx, touches[0].y - touchy);
-	touchx = touches[0].x;
-  touchy = touches[0].y;
-};
-
 });
