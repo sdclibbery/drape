@@ -1,7 +1,7 @@
 define(function(require) {
 
 var mouse = {
-  pan: function () {},
+  drag: function () {},
 };
 
 var mousedown = false;
@@ -13,21 +13,13 @@ window.onmousedown = function (evt) {
 };
 window.onmousemove = function (evt) {
   if (mousedown) {
-    mouse.pan(evt.clientX - mx, evt.clientY - my);
+    mouse.drag(evt.clientX - mx, evt.clientY - my);
     mx = evt.clientX;
     my = evt.clientY;
   }
 };
 window.onmouseup = function (evt) {
   mousedown = false;
-};
-
-var toArray = function (a) {
-  var r = [];
-  for (var i=0; i<a.length; i++) {
-    r.push(a[i]);
-  }
-  return r;
 };
 
 return mouse;

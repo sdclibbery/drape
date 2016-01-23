@@ -2,7 +2,7 @@ define(function(require) {
 
 var Matrix = require('matrix');
 var Vector = require('vector');
-var draw = require('draw');
+var draw = require('draw/draw');
 
 var vtxShader = ""
 +"  uniform mat4 viewIn;"

@@ -1,11 +1,11 @@
 define(function(require) {
 
-var drawMesh = require('drawMesh');
-var drawLines = require('drawLines');
-var triangulate = require('triangulate');
-var cutLines = require('cutlines');
-var touch = require('touch');
-var mouse = require('mouse');
+var drawMesh = require('draw/mesh');
+var drawLines = require('draw/lines');
+var triangulate = require('draw/triangulate');
+var cutLines = require('draw/cutlines');
+var touch = require('input/touch');
+var mouse = require('input/mouse');
 var camera = require('camera');
 var surface = require('surface');
 
