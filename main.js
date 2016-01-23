@@ -5,6 +5,7 @@ var drawLines = require('drawLines');
 var triangulate = require('triangulate');
 var cutLines = require('cutlines');
 var touch = require('touch');
+var mouse = require('mouse');
 var camera = require('camera');
 var surface = require('surface');
 
@@ -31,6 +32,11 @@ var render = function () {
 render();
 
 touch.pan = function (dx, dy) {
+  camera.pan(dx, dy);
+  render();
+};
+
+mouse.drag = function (dx, dy) {
   camera.pan(dx, dy);
   render();
 };
