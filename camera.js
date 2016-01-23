@@ -3,10 +3,13 @@ define(function(require) {
   var Matrix = require('matrix');
   var Vector = require('vector');
 
+  var min = Math.min;
+  var max = Math.max;
+
   var camera = {
     pitch: 45,
     yaw: 45,
-    fovy: 1.1
+    distance: 1
   };
 
   camera.pan = function (dx, dy) {
@@ -15,13 +18,14 @@ define(function(require) {
   };
 
   camera.zoom = function (dz) {
-    this.fovy += dz*0.01;
+    this.distance -= dz*0.01;
+    this.distance = max(min(this.distance, 2), 0.1);
   };
 
   camera.toMatrices = function (cw, ch) {
     return {
-      view: Matrix.arcBallView(-1, this.pitch, this.yaw),
-      perspective: Matrix.perspective(this.fovy, 0.001, 10, cw, ch)
+      view: Matrix.arcBallView(-this.distance, this.pitch, this.yaw),
+      perspective: Matrix.perspective(1.1, 0.001, 10, cw, ch)
     };
   };
 

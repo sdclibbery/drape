@@ -2,6 +2,7 @@ define(function(require) {
 
 var touch = {
   pan: function () {},
+  pinch: function () {}
 };
 
 var touches = {};
@@ -18,6 +19,12 @@ window.addEventListener("touchmove", function (evt) {
     var shouldPan = Object.keys(touches).length == 1;
     if (shouldPan) {
       touch.pan(changed.clientX - t.x, changed.clientY - t.y);
+    }
+    var shouldPinch = Object.keys(touches).length == 2;
+    if (shouldPinch) {
+      var oldx = changed.clientX;
+      var oldy = changed.clientY;
+      touch.pinch(Math.sqrt(oldx*oldx + oldy*oldy) - Math.sqrt(t.x*t.x + t.y*t.y));
     }
     t.x = changed.clientX;
     t.y = changed.clientY;
