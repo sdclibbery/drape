@@ -5,7 +5,8 @@ define(function(require) {
 
   var camera = {
     pitch: 45,
-    yaw: 45
+    yaw: 45,
+    fovy: 1.1
   };
 
   camera.pan = function (dx, dy) {
@@ -13,10 +14,14 @@ define(function(require) {
     this.pitch += dy*0.5;
   };
 
+  camera.zoom = function (dz) {
+    this.fovy += dz*0.01;
+  };
+
   camera.toMatrices = function (cw, ch) {
     return {
       view: Matrix.arcBallView(-1, this.pitch, this.yaw),
-      perspective: Matrix.perspective(1.1, 0.001, 10, cw, ch)
+      perspective: Matrix.perspective(this.fovy, 0.001, 10, cw, ch)
     };
   };
 

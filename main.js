@@ -35,9 +35,13 @@ touch.pan = function (dx, dy) {
   camera.pan(dx, dy);
   render();
 };
-
 mouse.drag = function (dx, dy) {
   camera.pan(dx, dy);
+  render();
+};
+
+touch.pinch = function (dz) {
+  camera.zoom(dz);
   render();
 };
 
