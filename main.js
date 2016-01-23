@@ -23,8 +23,6 @@ if (!ctxGl) { document.getElementById('info').innerHTML = 'WebGL not supported!'
 var mesh = triangulate(surface);
 var lines = cutLines(surface);
 
-var touchx, touchy;
-
 var render = function () {
   var ms = camera.toMatrices(canvas.width, canvas.height);
   drawMesh(ctxGl, mesh, ms.view, ms.perspective);
@@ -32,12 +30,17 @@ var render = function () {
 };
 render();
 
+touch.pan = function (dx, dy) {
+  camera.pan(dx, dy);
+  render();
+};
+
+var touchx, touchy;
 touch.start = function (touches) { touchx = touches[0].x; touchy = touches[0].y; }
 touch.move = function (touches) {
-	camera.drag(touches[0].x - touchx, touches[0].y - touchy);
+	touch.pan(touches[0].x - touchx, touches[0].y - touchy);
 	touchx = touches[0].x;
   touchy = touches[0].y;
-  render();
 };
 
 });

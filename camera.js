@@ -8,7 +8,7 @@ define(function(require) {
     yaw: 45
   };
 
-  camera.drag = function (dx, dy) {
+  camera.pan = function (dx, dy) {
     this.yaw += dx*0.5;
     this.pitch += dy*0.5;
   };
