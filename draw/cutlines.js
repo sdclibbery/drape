@@ -23,11 +23,13 @@ return function (surface) {
       var s = surface(posx, posy);
       s.pos.z += 0.003;
       var len = size*0.8/resX;
+      var headLen = len*0.3;
+      var headHW = len*0.2;
       var perp = s.norm.cross(s.cutDir);
       gcodeToGl(vtxPosns, v, s.pos.add(s.cutDir.multiply(-len*0.5)));
       gcodeToGl(vtxPosns, v+3, s.pos.add(s.cutDir.multiply(len*0.5)));
-      gcodeToGl(vtxPosns, v+6, s.pos.add(s.cutDir.multiply(len*0.4)).add(perp.multiply(len*0.3)));
-      gcodeToGl(vtxPosns, v+9, s.pos.add(s.cutDir.multiply(len*0.4)).add(perp.multiply(-len*0.3)));
+      gcodeToGl(vtxPosns, v+6, s.pos.add(s.cutDir.multiply(headLen)).add(perp.multiply(headHW)));
+      gcodeToGl(vtxPosns, v+9, s.pos.add(s.cutDir.multiply(headLen)).add(perp.multiply(-headHW)));
     }
   }
 
