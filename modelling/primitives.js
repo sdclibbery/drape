@@ -41,10 +41,9 @@ primitives.sphere = function (radius) {
     return {
       pos: pos,
       norm: pos.unit(),
-// ! need to sort these and think about testing. How about some property based testing? eg test norm is perp to tan etc
-//      cutDir: new vector(),
-//      cutCurvature: ,
-//      perpCurvature:
+      cutDir: new vector(-y, x, 0).unit(),
+      cutCurvature: 0,
+      perpCurvature: 0
     };
   };
 };

@@ -48,8 +48,6 @@ x Pinch to move camera in/out
  x touch module should export pan / pinch etc events directly (ie touch.pan not touch.start/move etc)
  x Proper multitouch handling
  x Pinch zoom
-* Refactor: generate grid of surface points and then triangulate/cutlines that
- * Define an (initially uniform) sample grid
 * Return basis and curvature for sphere
  * tests
 * Tests for csg union
@@ -57,6 +55,8 @@ x Pinch to move camera in/out
  * tests
 * Return basis/curvature for sweep
  * tests
+* Refactor: generate grid of surface points and then triangulate/cutlines that
+* Define an (initially uniform) sample grid
 * Modify sweep to scale the profile along the path
  * Define the way the profile changes
  * Need to modify basis and curvature too
