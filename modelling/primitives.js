@@ -19,8 +19,8 @@ primitives.cube = function (size) {
   return function (x, y) {
     if (abs(x) > size/2 || abs(y) > size/2) { return bottom(x,y); }
     var nearestToXAxis = abs(x) > abs(y);
-    var cutX = nearestToXAxis ? 0 : sign(y);
-    var cutY = nearestToXAxis ? -sign(x) : 0;
+    var cutX = nearestToXAxis ? 0 : -sign(y);
+    var cutY = nearestToXAxis ? sign(x) : 0;
     return {
       pos: new vector(x,y,size),
       norm: new vector(0,0,1),

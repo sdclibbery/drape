@@ -28,10 +28,10 @@ testSuites.cube = function () {
     var surf = prim.cube(1)(x,y);
     commonProperies(surf);
     assert(surf, s => s.norm.z === 1, 'normal always points up');
+    assert(surf, s => abs(s.cutDir.x) === 0 || abs(s.cutDir.y) === 0, 'cutDir always on an axis');
+    assert(surf, s => s.pos.z == 0 || s.cutDir.cross(s.pos).z < 0, 'cutDir is clockwise');
     assert(surf, s => s.cutCurvature === 0, 'curvature is zero');
     assert(surf, s => s.perpCurvature === 0, 'perp curvature is zero');
-    assert(surf, s => abs(s.cutDir.x) === 0 || abs(s.cutDir.y) === 0, 'cutDir always on an axis');
-    assert(surf, s => s.pos.z == 0 || s.cutDir.cross(s.pos).z > 0, 'cutDir is clockwise');
   }
 };
 
@@ -42,10 +42,9 @@ testSuites.sphere = function () {
     var surf = prim.sphere(1)(x,y);
     commonProperies(surf);
     assert(surf, s => s.cutDir.z === 0, 'cutDir always in plane');
-    // norm _|_ cutDir
-    // norm is direction to point
-    // cutDir is always pointing around the sphere (z cpt is zero)
-    // pos distance from ctr pt is always radius
+    assert(surf, s => s.pos.cross(s.norm).isZero(), 'norm in same direction as position');
+    assert(surf, s => s.pos.z == 0 || s.cutDir.cross(s.pos).z < 0, 'cutDir is clockwise');
+    assert(surf, s => s.pos.isUnit(), 'unit radius');
     // curvature..?
   }
 };

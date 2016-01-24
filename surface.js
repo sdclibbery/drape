@@ -28,8 +28,8 @@ var scale = function (s, f) {
 */
 
 return csg.union([
-//              prim.cube(0.2)
-              prim.sphere(0.1)
+              prim.cube(0.2),
+              prim.sphere(0.18)
 //              rotate(PI/4, prim.cube(10))
 //              translate(5, 5, prim.cube(12))
 //              prim.sweep(prim.line(-10,-10, 10,10), prim.ellipse(3, 5))
