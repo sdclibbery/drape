@@ -45,7 +45,8 @@ testSuites.sphere = function () {
     assert(surf, s => s.pos.cross(s.norm).isZero(), 'norm in same direction as position');
     assert(surf, s => s.pos.z == 0 || s.cutDir.cross(s.pos).z < 0, 'cutDir is clockwise');
     assert(surf, s => s.pos.isUnit(), 'unit radius');
-    // curvature..?
+    assert(surf, s => s.cutCurvature == 1/1, 'cutDir curvature is 1/radius');
+    assert(surf, s => s.perpCurvature == 1/1, 'perp curvature is 1/radius');
   }
 };
 
