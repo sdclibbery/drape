@@ -1,38 +1,23 @@
 define(function(require) {
 
+var Vector = require('vector');
 var prim = require('modelling/primitives');
 var csg = require('modelling/csg');
 var bottom = require('modelling/bottom');
 
-/*
 var translate = function (tx, ty, f) {
   return function (x,y) {
-    return f(x-tx, y-ty);
+    var s = f(x-tx, y-ty);
+    s.pos = s.pos.add(new Vector(tx, ty, 0));
+    return s;
   };
 };
-
-var sin = Math.sin;
-var cos = Math.cos;
-
-var rotate = function (a, f) {
-  return function (x,y) {
-    return f(x*cos(a) + y*sin(a), -x*sin(a) + y*cos(a));
-  };
-};
-
-var scale = function (s, f) {
-  return function (x,y) {
-    return f(x/s, y/s);
-  };
-};
-*/
 
 return csg.union([
-              prim.cube(0.2),
-              prim.sphere(0.18)
-//              rotate(PI/4, prim.cube(10))
-//              translate(5, 5, prim.cube(12))
-//              prim.sweep(prim.line(-10,-10, 10,10), prim.ellipse(3, 5))
+              translate(0.15, 0.15, prim.cube(0.1)),
+              translate(0.12, 0.12, prim.sphere(0.09)),
+              translate(0.1, 0.1, prim.cube(0.1)),
+//              prim.sweep(prim.line(-10,-10, 10,10), prim.ellipse(3, 5)),
             ]);
 
 });
