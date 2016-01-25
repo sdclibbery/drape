@@ -49,10 +49,17 @@ x Pinch to move camera in/out
  x Proper multitouch handling
  x Pinch zoom
 x Return basis and curvature for sphere
-* Transform basis/curvature for modifiers (rotate, translate etc)
- * tests
-* Return basis/curvature for sweep
- * tests
+x Translate
+* Sweep
+ o Takes a profile and a path
+ o For each point, find the line-of-profile
+ * Height from profile evaluation on line-of-profile
+ * CutDir from path
+ * Perp from profile gives the normal
+ * CutCurvature from profile
+ * PerpCurvature from path
+* Sweep takes another arg giving the scale of the profile along the path
+ * Will mean redoing all the cutDir/curvature etc and it'll be a lot trickier :-/
 * Refactor: generate grid of surface points and then triangulate/cutlines that
 * Define an (initially uniform) sample grid
 * Modify sweep to scale the profile along the path
