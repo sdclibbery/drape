@@ -17,7 +17,7 @@ return csg.union([
               translate(0.15, 0.15, prim.cube(0.1)),
               translate(0.12, 0.12, prim.sphere(0.09)),
               translate(0.1, 0.1, prim.cube(0.1)),
-//              prim.sweep(prim.line(-10,-10, 10,10), prim.ellipse(3, 5)),
+              prim.sweep(prim.line(0.1,-0.1, -0.1,0.1), prim.ellipse(0.03, 0.05)),
             ]);
 
 });

@@ -49,18 +49,16 @@ primitives.sphere = function (radius) {
   };
 };
 
-/*
-var ellipse = function (hw, hh) {
+primitives.ellipse = function (hw, hh) {
   return function (x) {
-    x = abs(x);
-    if (x >= hw) { return 0; }
+    if (abs(x) >= hw) { return 0; }
     return sqrt((1 - x*x/(hw*hw)) * hh*hh);
   };
 };
 
 primitives.line = function (x1, y1, x2, y2) {
   return function (x,y) {
-    // calculate perpendicular distance from
+    // calculate perpendicular distance
     var A = x - x1;
     var B = y - y1;
     var C = x2 - x1;
@@ -69,24 +67,38 @@ primitives.line = function (x1, y1, x2, y2) {
     var len_sq = C * C + D * D;
     var param = -1;
     if (len_sq != 0) { param = dot / len_sq; }; // in case of 0 length line
-    if (param < 0 || param > 1) { return inf; } // outside of line segment
+    if (param < 0 || param > 1) {  // outside of line segment
+      return {
+        distance: Infinity,
+        cutDir: bottom(x,y).cutDir
+      };
+    }
     var xx, yy;
     xx = x1 + param * C;
     yy = y1 + param * D;
     var dx = x - xx;
     var dy = y - yy;
-    return Math.sqrt(dx*dx + dy*dy);
+    return {
+      distance: Math.sqrt(dx*dx + dy*dy),
+      cutDir: new vector(-C, -D, 0).unit(),
+      cutCurvature: 0,
+    };
   };
 };
 
 primitives.sweep = function (path, profile) {
   return function (x, y) {
-    var dist = path(x, y);
-    //!! Need to scale the profile along the path...
-    return profile(dist);
+    var info = path(x, y);
+    var z = profile(info.distance);
+    return {
+      pos: new vector(x,y,z),
+      norm: new vector(0,0,1),
+      cutDir: info.cutDir,
+      cutCurvature: info.cutCurvature,
+      perpCurvature: 0
+    };
   };
 };
-*/
 
 return primitives;
 

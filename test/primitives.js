@@ -50,6 +50,15 @@ testSuites.sphere = function () {
   }
 };
 
+testSuites.lineSweptEllipse = function () {
+  for (var i=0; i<100; i++) {
+    var x = 1.1*(Math.random()-0.5);
+    var y = 1.1*(Math.random()-0.5);
+    var surf = prim.sweep(prim.line(1,-1, -1,1), prim.ellipse(0.5, 1))(x,y);
+    commonProperies(surf);
+  }
+};
+
 return function () {
   for (name in testSuites) {
     console.log(name);
