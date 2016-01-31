@@ -80,7 +80,7 @@ primitives.line = function (x1, y1, x2, y2) {
     var dy = y - yy;
     return {
       distance: Math.sqrt(dx*dx + dy*dy),
-      cutDir: new vector(-C, -D, 0).unit(),
+      cutDir: new vector(C, D, 0).unit(),
       cutCurvature: 0,
     };
   };

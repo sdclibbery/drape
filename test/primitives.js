@@ -54,8 +54,9 @@ testSuites.lineSweptEllipse = function () {
   for (var i=0; i<100; i++) {
     var x = 1.1*(Math.random()-0.5);
     var y = 1.1*(Math.random()-0.5);
-    var surf = prim.sweep(prim.line(1,-1, -1,1), prim.ellipse(0.5, 1))(x,y);
+    var surf = prim.sweep(prim.line(-1,0, 1,0), prim.ellipse(1, 1))(x,y);
     commonProperies(surf);
+    assert(surf, s => s.cutDir.x === 1, 'cutDir');
   }
 };
 
