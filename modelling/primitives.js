@@ -51,8 +51,18 @@ primitives.sphere = function (radius) {
 
 primitives.ellipse = function (hw, hh) {
   return function (x) {
-    if (abs(x) >= hw) { return 0; }
-    return sqrt((1 - x*x/(hw*hw)) * hh*hh);
+    if (abs(x) >= hw) {
+      return {
+        height: 0,
+        gradient: 0,
+        curvature: 0
+      };
+    }
+    return {
+      height: sqrt((1 - x*x/(hw*hw)) * hh*hh),
+      gradient: abs(x) / abs(abs(x) - hw), // Dont think this is exactly right ;-)
+      curvature: 0
+    };
   };
 };
 
@@ -70,7 +80,9 @@ primitives.line = function (x1, y1, x2, y2) {
     if (!isInSegment) {
       return {
         distance: Infinity,
-        cutDir: bottom(x,y).cutDir
+        cutDir: bottom(x,y).cutDir,
+        perpDir: bottom(x,y).cutDir,
+        curvature: 0
       };
     }
     var nearestPointOnSegment = p1.add(line.multiply(param));
@@ -78,22 +90,23 @@ primitives.line = function (x1, y1, x2, y2) {
     var side = perp.dot(new vector(-line.y, line.x, 0));
     return {
       distance: perp.length(),
-      cutDir: line.unit().multiply(side<0?1:-1),
-      cutCurvature: 0,
+      cutDir: line.unit().multiply(side<0 ? 1 : -1),
+      perpDir: perp.unit(),
+      curvature: 0
     };
   };
 };
 
-primitives.sweep = function (path, profile) {
+primitives.sweep = function (pathFn, profileFn) {
   return function (x, y) {
-    var info = path(x, y);
-    var z = profile(info.distance);
+    var path = pathFn(x, y);
+    var profile = profileFn(path.distance);
     return {
-      pos: new vector(x,y,z),
-      norm: new vector(0,0,1),
-      cutDir: info.cutDir,
-      cutCurvature: info.cutCurvature,
-      perpCurvature: 0
+      pos: new vector(x, y, profile.height),
+      norm: profile.gradient==0 ? new vector(0,0,1) : path.perpDir.add(new vector(0,0,1/profile.gradient)).unit(),
+      cutDir: path.cutDir,
+      cutCurvature: path.curvature,
+      perpCurvature: profile.curvature
     };
   };
 };
