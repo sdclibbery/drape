@@ -75,9 +75,10 @@ primitives.line = function (x1, y1, x2, y2) {
     }
     var nearestPointOnSegment = p1.add(line.multiply(param));
     var perp = p.subtract(nearestPointOnSegment);
+    var side = perp.dot(new vector(-line.y, line.x, 0));
     return {
       distance: perp.length(),
-      cutDir: line.unit(),
+      cutDir: line.unit().multiply(side<0?1:-1),
       cutCurvature: 0,
     };
   };

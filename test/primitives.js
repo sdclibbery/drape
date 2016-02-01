@@ -19,7 +19,7 @@ var commonProperies = function (surf) {
   assert(surf, s => s.norm.perpTo(s.cutDir), 'norm _|_ cutDir');
   assert(surf, s => s.norm.isUnit(), 'norm is unit');
   assert(surf, s => s.cutDir.isUnit(), 'cutDir is unit');
-//  assert(surf, s => s.pos.z == 0 || s.cutDir.cross(s.pos).z < 0, 'cutDir is clockwise');
+  assert(surf, s => s.pos.z == 0 || s.cutDir.cross(s.pos).z < 0, 'cutDir is clockwise');
 };
 
 testSuites.cube = function () {
@@ -55,8 +55,6 @@ testSuites.lineSweptEllipse = function () {
     var y = 1.1*(Math.random()-0.5);
     var surf = prim.sweep(prim.line(-1,0, 1,0), prim.ellipse(1, 1))(x,y);
     commonProperies(surf);
-    assert(surf, s => s.cutDir.x === 1, 'cutDir');
-    //height
   }
 };
 
