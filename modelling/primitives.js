@@ -58,29 +58,26 @@ primitives.ellipse = function (hw, hh) {
 
 primitives.line = function (x1, y1, x2, y2) {
   return function (x,y) {
-    // calculate perpendicular distance
-    var A = x - x1;
-    var B = y - y1;
-    var C = x2 - x1;
-    var D = y2 - y1;
-    var dot = A * C + B * D;
-    var len_sq = C * C + D * D;
+    var p = new vector(x, y, 0);
+    var p2 = new vector(x2, y2, 0);
+    var p1 = new vector(x1, y1, 0);
+    var line = p2.subtract(p1);
+    var pos = p.subtract(p1);
+    var distanceAlongLine = line.dot(pos);
     var param = -1;
-    if (len_sq != 0) { param = dot / len_sq; }; // in case of 0 length line
-    if (param < 0 || param > 1) {  // outside of line segment
+    if (!line.isZero()) { param = distanceAlongLine / line.sqrLength(); }
+    var isInSegment = (param >= 0 && param <= 1);
+    if (!isInSegment) {
       return {
         distance: Infinity,
         cutDir: bottom(x,y).cutDir
       };
     }
-    var xx, yy;
-    xx = x1 + param * C;
-    yy = y1 + param * D;
-    var dx = x - xx;
-    var dy = y - yy;
+    var nearestPointOnSegment = p1.add(line.multiply(param));
+    var perp = p.subtract(nearestPointOnSegment);
     return {
-      distance: Math.sqrt(dx*dx + dy*dy),
-      cutDir: new vector(C, D, 0).unit(),
+      distance: perp.length(),
+      cutDir: line.unit(),
       cutCurvature: 0,
     };
   };

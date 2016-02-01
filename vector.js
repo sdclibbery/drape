@@ -59,7 +59,10 @@ Vector.prototype = {
     );
   },
   length: function() {
-    return Math.sqrt(this.dot(this));
+    return Math.sqrt(this.sqrLength());
+  },
+  sqrLength: function() {
+    return this.dot(this);
   },
   unit: function() {
     return this.divide(this.length());

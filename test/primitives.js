@@ -19,6 +19,7 @@ var commonProperies = function (surf) {
   assert(surf, s => s.norm.perpTo(s.cutDir), 'norm _|_ cutDir');
   assert(surf, s => s.norm.isUnit(), 'norm is unit');
   assert(surf, s => s.cutDir.isUnit(), 'cutDir is unit');
+//  assert(surf, s => s.pos.z == 0 || s.cutDir.cross(s.pos).z < 0, 'cutDir is clockwise');
 };
 
 testSuites.cube = function () {
@@ -29,7 +30,6 @@ testSuites.cube = function () {
     commonProperies(surf);
     assert(surf, s => s.norm.z === 1, 'normal always points up');
     assert(surf, s => abs(s.cutDir.x) === 0 || abs(s.cutDir.y) === 0, 'cutDir always on an axis');
-    assert(surf, s => s.pos.z == 0 || s.cutDir.cross(s.pos).z < 0, 'cutDir is clockwise');
     assert(surf, s => s.cutCurvature === 0, 'curvature is zero');
     assert(surf, s => s.perpCurvature === 0, 'perp curvature is zero');
   }
@@ -43,7 +43,6 @@ testSuites.sphere = function () {
     commonProperies(surf);
     assert(surf, s => s.cutDir.z === 0, 'cutDir always in plane');
     assert(surf, s => s.pos.cross(s.norm).isZero(), 'norm in same direction as position');
-    assert(surf, s => s.pos.z == 0 || s.cutDir.cross(s.pos).z < 0, 'cutDir is clockwise');
     assert(surf, s => s.pos.isUnit(), 'unit radius');
     assert(surf, s => s.cutCurvature == 1/1, 'cutDir curvature is 1/radius');
     assert(surf, s => s.perpCurvature == 1/1, 'perp curvature is 1/radius');
@@ -57,6 +56,7 @@ testSuites.lineSweptEllipse = function () {
     var surf = prim.sweep(prim.line(-1,0, 1,0), prim.ellipse(1, 1))(x,y);
     commonProperies(surf);
     assert(surf, s => s.cutDir.x === 1, 'cutDir');
+    //height
   }
 };
 
