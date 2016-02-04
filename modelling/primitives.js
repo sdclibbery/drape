@@ -50,7 +50,7 @@ primitives.sphere = function (radius) {
 };
 
 primitives.ellipse = function (hw, hh) {
-  var lerp = function (v1, v2, p) { return v1 + (v2-v1)*p; };
+  var lerp = function (v1, v2, p) { return v1 + (v2-v1)*min(max(p,0),1); };
   return function (x) {
     var p = abs(x)/hw;
     if (p > 1) {
@@ -63,7 +63,7 @@ primitives.ellipse = function (hw, hh) {
     return {
       height: sqrt((1 - p*p) * hh*hh),
       gradient: abs(x) / abs(abs(x) - hw), // Dont think this is exactly right ;-)
-      curvature: lerp(1/hh, 1/hw, p) // Is this right..??
+      curvature: lerp(1/hw, 1/hh, p) // Is this anything like right..??
     };
   };
 };
