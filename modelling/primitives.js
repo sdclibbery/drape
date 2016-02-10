@@ -60,6 +60,9 @@ primitives.ellipse = function (hw, hh) {
         curvature: 0
       };
     }
+
+
+
     return {
       height: sqrt((1 - p*p) * hh*hh),
       gradient: abs(x) / abs(abs(x) - hw), // Dont think this is exactly right ;-)
