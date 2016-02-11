@@ -53,19 +53,19 @@ primitives.ellipse = function (hw, hh) {
   var lerp = function (v1, v2, p) { return v1 + (v2-v1)*min(max(p,0),1); };
   return function (x) {
     var p = abs(x)/hw;
-    if (p > 1) {
+    if (p >= 1) {
       return {
         height: 0,
         gradient: 0,
         curvature: 0
       };
     }
-
-
-
+    var y = sqrt((1 - p*p) * hh*hh);
+    var nx = y/(hh*hh);
+    var ny = abs(x)/(hw*hw);
     return {
-      height: sqrt((1 - p*p) * hh*hh),
-      gradient: abs(x) / abs(abs(x) - hw), // Dont think this is exactly right ;-)
+      height: y,
+      gradient: ny/nx,
       curvature: lerp(1/hw, 1/hh, p) // Is this anything like right..??
     };
   };

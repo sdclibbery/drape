@@ -34,7 +34,7 @@ var delta = function (surface, surf, dir) {
 var numericalTests = function (surface, surf) {
   var sc = delta(surface, surf, surf.cutDir);
   var sp = delta(surface, surf, surf.cutDir.cross(surf.norm));
-  assert(surf, s => s.norm.nearTo(calcNormal(s, sc, sp), 1e-5), 'normal is close to calculated normal'+surf.norm.dot(calcNormal(surf, sc, sp)));
+  assert(surf, s => s.norm.nearTo(calcNormal(s, sc, sp), 1e-6), 'normal is close to calculated normal'+surf.norm.dot(calcNormal(surf, sc, sp)));
   // Test cutDir curvature
   // Test perp curvature
 };
