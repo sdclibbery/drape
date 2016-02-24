@@ -100,6 +100,11 @@ testSuites.lineSweptEllipse = function () {
   });
 };
 
+testSuites.lineSweptEllipseDiagonal = function () {
+  test(prim.sweep(prim.line(-1,-1, 1,1), prim.ellipse(0.5, 0.5)), function (surf) {
+  });
+};
+
 return function () {
   for (name in testSuites) {
     console.log(name);
