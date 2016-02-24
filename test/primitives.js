@@ -90,7 +90,7 @@ testSuites.sphere = function () {
     assert(surf, s => s.cutDir.z === 0, 'cutDir always in plane');
     assert(surf, s => s.pos.cross(s.norm).isZero(), 'norm in same direction as position');
     assert(surf, s => s.pos.isUnit(), 'radius');
-    assert(surf, s => s.cutCurvature == 1/1, 'cutDir curvature is 1/radius');
+    assert(surf, s => s.cutCurvature == 1/s.pos.z, 'cutDir curvature is 1/radius');
     assert(surf, s => s.perpCurvature == 1/1, 'perp curvature is 1/radius');
   });
 };

@@ -33,18 +33,19 @@ primitives.cube = function (size) {
 
 primitives.sphere = function (radius) {
   var r2 = radius*radius;
-  var curvature = 1/radius;
+  var perpCurvature = 1/radius;
   return function (x, y) {
     var x2 = x*x;
     var y2 = y*y;
     if (x2 + y2 > r2) { return bottom(x,y); }
-    var pos = new vector(x, y, sqrt(r2 - x2 - y2));
+    var z = sqrt(r2 - x2 - y2);
+    var pos = new vector(x, y, z);
     return {
       pos: pos,
       norm: pos.unit(),
       cutDir: new vector(-y, x, 0).unit(),
-      cutCurvature: curvature,
-      perpCurvature: curvature
+      cutCurvature: 1/z,
+      perpCurvature: perpCurvature
     };
   };
 };
