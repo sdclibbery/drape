@@ -96,12 +96,12 @@ testSuites.sphere = function () {
 };
 
 testSuites.lineSweptEllipse = function () {
-  test(prim.sweep(prim.line(-1,0, 1,0), prim.ellipse(1, 1), prim.constant()), function (surf) {
+  test(prim.sweep(prim.line(-1,0, 1,0), prim.ellipse(1, 1), prim.scale(0)), function (surf) {
   });
 };
 
 testSuites.lineSweptEllipseDiagonal = function () {
-  test(prim.sweep(prim.line(-1,-1, 1,1), prim.ellipse(0.5, 0.5), prim.constant()), function (surf) {
+  test(prim.sweep(prim.line(-1,-1, 1,1), prim.ellipse(0.5, 0.5), prim.scale(0)), function (surf) {
   });
 };
 

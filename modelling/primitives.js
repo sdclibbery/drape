@@ -12,6 +12,7 @@ var sin = Math.sin;
 var cos = Math.cos;
 var sqrt = Math.sqrt;
 var inf = Infinity;
+var pow = Math.pow;
 
 var primitives = {};
 
@@ -106,15 +107,9 @@ primitives.line = function (x1, y1, x2, y2) {
   };
 };
 
-primitives.constant = function () {
+primitives.scale = function (p) {
   return function (d) {
-    return 1;
-  }
-};
-
-primitives.linear = function () {
-  return function (d) {
-    return d;
+    return pow(1 - abs(1-d*2), p);
   }
 };
 
