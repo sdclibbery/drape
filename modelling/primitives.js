@@ -52,8 +52,10 @@ primitives.sphere = function (radius) {
 
 primitives.ellipse = function (hw, hh) {
   var lerp = function (v1, v2, p) { return v1 + (v2-v1)*min(max(p,0),1); };
-  return function (x) {
-    var p = abs(x)/hw;
+  return function (x, s) {
+    var hws = hw*s;
+    var hhs = hh*s;
+    var p = abs(x)/hws;
     if (p >= 1) {
       return {
         height: 0,
@@ -61,13 +63,13 @@ primitives.ellipse = function (hw, hh) {
         curvature: 0
       };
     }
-    var y = sqrt((1 - p*p) * hh*hh);
-    var nx = y/(hh*hh);
-    var ny = abs(x)/(hw*hw);
+    var y = sqrt((1 - p*p) * hhs*hhs);
+    var nx = y/(hhs*hhs);
+    var ny = abs(x)/(hws*hws);
     return {
       height: y,
       gradient: ny/nx,
-      curvature: lerp(1/hw, 1/hh, p) // Is this anything like right..??
+      curvature: lerp(1/hws, 1/hhs, p) // Is this anything like right..??
     };
   };
 };
@@ -95,7 +97,8 @@ primitives.line = function (x1, y1, x2, y2) {
     var perp = p.subtract(nearestPointOnSegment);
     var side = perp.dot(new vector(-line.y, line.x, 0));
     return {
-      distance: perp.length(),
+      param: param,
+      perpDistance: perp.length(),
       cutDir: line.unit().multiply(side<0 ? 1 : -1),
       perpDir: perp.unit(),
       curvature: 0
@@ -103,10 +106,23 @@ primitives.line = function (x1, y1, x2, y2) {
   };
 };
 
-primitives.sweep = function (pathFn, profileFn) {
+primitives.constant = function () {
+  return function (d) {
+    return 1;
+  }
+};
+
+primitives.linear = function () {
+  return function (d) {
+    return d;
+  }
+};
+
+primitives.sweep = function (pathFn, profileFn, scaleFn) {
   return function (x, y) {
     var path = pathFn(x, y);
-    var profile = profileFn(path.distance);
+    var scale = scaleFn(path.param);
+    var profile = profileFn(path.perpDistance, scale);
     return {
       pos: new vector(x, y, profile.height),
       norm: profile.gradient==0 ? new vector(0,0,1) : path.perpDir.add(new vector(0,0,1/profile.gradient)).unit(),
