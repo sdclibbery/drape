@@ -105,6 +105,13 @@ testSuites.lineSweptEllipseDiagonal = function () {
   });
 };
 
+/*
+testSuites.lineSweptEllipseLinearScale = function () {
+  test(prim.sweep(prim.line(-1,-1, 1,1), prim.ellipse(0.5, 0.5), prim.scale(1)), function (surf) {
+  });
+};
+*/
+
 return function () {
   for (name in testSuites) {
     console.log(name);

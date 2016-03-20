@@ -109,7 +109,9 @@ primitives.line = function (x1, y1, x2, y2) {
 
 primitives.scale = function (p) {
   return function (d) {
-    return pow(1 - abs(1-d*2), p);
+    return {
+      scale: pow(1 - abs(1-d*2), p)
+    }
   }
 };
 
@@ -117,7 +119,7 @@ primitives.sweep = function (pathFn, profileFn, scaleFn) {
   return function (x, y) {
     var path = pathFn(x, y);
     var scale = scaleFn(path.param);
-    var profile = profileFn(path.perpDistance, scale);
+    var profile = profileFn(path.perpDistance, scale.scale);
     return {
       pos: new vector(x, y, profile.height),
       norm: profile.gradient==0 ? new vector(0,0,1) : path.perpDir.add(new vector(0,0,1/profile.gradient)).unit(),
