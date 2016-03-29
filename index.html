@@ -66,8 +66,9 @@ x Numerical tests for normal and curvatures
  x Fix ellipse curvature
  x Fix sphere cut curvature!
 x Sweep takes another arg giving the scale of the profile along the path
-* Need a good mechanism to bring together the various path/profile/scale data into the final surface info
-* Spline paths to use with sweep
+* Break primitives.js out into appropriate modules
+* Tests at the seam underneath the sweep function: i.e. tests for paths, profiles and scale functions
+* Bring in bezier.js and set up a bezier path function
 * Refactor: generate grid of surface points and then triangulate/cutlines that
 * Define an (initially uniform) sample grid
 * Modify sweep to scale the profile along the path
