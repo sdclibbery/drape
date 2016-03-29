@@ -2,6 +2,7 @@ define(function(require) {
 
 var vector = require('vector');
 var prim = require('modelling/primitives');
+var ellipse = require('modelling/profile/ellipse');
 
 var abs = Math.abs;
 var sqrt = Math.sqrt;
@@ -96,19 +97,19 @@ testSuites.sphere = function () {
 };
 
 testSuites.lineSweptEllipse = function () {
-  test(prim.sweep(prim.line(-1,0, 1,0), prim.ellipse(1, 1), prim.scale(0)), function (surf) {
+  test(prim.sweep(prim.line(-1,0, 1,0), ellipse(1, 1), prim.scale(0)), function (surf) {
   });
 };
 
 testSuites.lineSweptEllipseDiagonal = function () {
-  test(prim.sweep(prim.line(-1,-1, 1,1), prim.ellipse(0.5, 0.5), prim.scale(0)), function (surf) {
+  test(prim.sweep(prim.line(-1,-1, 1,1), ellipse(0.5, 0.5), prim.scale(0)), function (surf) {
   });
 };
 
 /*
 !! normal and curvatures not setup for scaling along the profile yet...
 testSuites.lineSweptEllipseLinearScale = function () {
-  test(prim.sweep(prim.line(-1,-1, 1,1), prim.ellipse(0.5, 0.5), prim.scale(1)), function (surf) {
+  test(prim.sweep(prim.line(-1,-1, 1,1), ellipse(0.5, 0.5), prim.scale(1)), function (surf) {
   });
 };
 */

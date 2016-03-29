@@ -51,30 +51,6 @@ primitives.sphere = function (radius) {
   };
 };
 
-primitives.ellipse = function (hw, hh) {
-  var lerp = function (v1, v2, p) { return v1 + (v2-v1)*min(max(p,0),1); };
-  return function (x, s) {
-    var hws = hw*s;
-    var hhs = hh*s;
-    var p = abs(x)/hws;
-    if (p >= 1) {
-      return {
-        height: 0,
-        gradient: 0,
-        curvature: 0
-      };
-    }
-    var y = sqrt((1 - p*p) * hhs*hhs);
-    var nx = y/(hhs*hhs);
-    var ny = abs(x)/(hws*hws);
-    return {
-      height: y,
-      gradient: ny/nx,
-      curvature: lerp(1/hws, 1/hhs, p) // Is this anything like right..??
-    };
-  };
-};
-
 primitives.line = function (x1, y1, x2, y2) {
   return function (x,y) {
     var p = new vector(x, y, 0);
