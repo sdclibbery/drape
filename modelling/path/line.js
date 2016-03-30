@@ -15,13 +15,7 @@ return function (x1, y1, x2, y2) {
     if (!line.isZero()) { param = distanceAlongLine / line.sqrLength(); }
     var isInSegment = (param >= 0 && param <= 1);
     if (!isInSegment) {
-      return {
-        param: param,
-        perpDistance: Infinity,
-        cutDir: bottom(x,y).cutDir,
-        perpDir: bottom(x,y).cutDir,
-        curvature: 0
-      };
+      return null;
     }
     var nearestPointOnSegment = p1.add(line.multiply(param));
     var perp = p.subtract(nearestPointOnSegment);

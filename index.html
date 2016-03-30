@@ -67,16 +67,13 @@ x Numerical tests for normal and curvatures
  x Fix sphere cut curvature!
 x Sweep takes another arg giving the scale of the profile along the path
 x Break primitives.js out into appropriate modules
-* Tests at the seam underneath the sweep function: i.e. tests for paths, profiles and scale functions
- * Path
- * Profile
- * Scale
+x Path tests at the seam underneath the sweep function
+* Scaling along the path _should_ change the cutDir, normal and curvature!
+ * Define the way the profile changes
+ * Need to modify basis and curvature too
 * Bring in bezier.js and set up a bezier path function
 * Refactor: generate grid of surface points and then triangulate/cutlines that
 * Define an (initially uniform) sample grid
-* Modify sweep to scale the profile along the path
- * Define the way the profile changes
- * Need to modify basis and curvature too
 * Simple toolpath generation: simple criss/cross for now
 * Triangulate from toolpath; generate cutlines visualisation from toolpath
 * Generate tool path from surface info considered as a vector field

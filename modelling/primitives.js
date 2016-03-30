@@ -47,6 +47,7 @@ primitives.sphere = function (radius) {
 primitives.sweep = function (pathFn, profileFn, scaleFn) {
   return function (x, y) {
     var path = pathFn(x, y);
+    if (path === null) { return bottom(x,y); }
     var scale = scaleFn(path.param);
     var profile = profileFn(path.perpDistance, scale.scale);
     return {

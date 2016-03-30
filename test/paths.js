@@ -7,7 +7,7 @@ var v2s = function (v) {
 };
 
 var assert = function (res, x,y, pred, m) {
-  if (!pred(res)) { console.log(m+' at ' + v2s({x:x, y:y})); }
+  if (!pred(res)) { console.log(m+' at ' + v2s({x:x, y:y})+' dist: '+res.perpDistance); }
 };
 
 var nearTo = function (v1, v2, eps) {
@@ -19,10 +19,12 @@ var test = function (path) {
     var x = 1*(Math.random()-0.5);
     var y = 1*(Math.random()-0.5);
     var res = path(x,y);
+    if (res === null) { continue; }
     assert(res, x,y, r => r.param >= 0 && r.param <= 1, "param in range");
     assert(res, x,y, r => r.perpDistance < 1, "perpDistance");
     assert(res, x,y, r => r.cutDir.isUnit(), "cutDir normalised");
     assert(res, x,y, r => r.perpDir.isUnit(), "cutDir normalised");
+    assert(res, x,y, r => r.perpDir.perpTo(r.cutDir), 'perpDir _|_ cutDir');
     assert(res, x,y, r => r.curvature >= 0 && r.curvature <= 10, "curvature in range");
   }
 };
@@ -30,7 +32,7 @@ var test = function (path) {
 var testSuites = {};
 
 testSuites.line = function () {
-  test(line(0,-0.5, 0,0.5));
+  test(line(-0.1,-0.4, 0.1,0.4));
 };
 
 return function () {
