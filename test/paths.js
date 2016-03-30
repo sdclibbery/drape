@@ -20,6 +20,10 @@ var test = function (path) {
     var y = 1*(Math.random()-0.5);
     var res = path(x,y);
     assert(res, x,y, r => r.param >= 0 && r.param <= 1, "param in range");
+    assert(res, x,y, r => r.perpDistance < 1, "perpDistance");
+    assert(res, x,y, r => r.cutDir.isUnit(), "cutDir normalised");
+    assert(res, x,y, r => r.perpDir.isUnit(), "cutDir normalised");
+    assert(res, x,y, r => r.curvature >= 0 && r.curvature <= 10, "curvature in range");
   }
 };
 
