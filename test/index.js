@@ -2,13 +2,17 @@
 
 //---------
 // Patch to enable normal web require modules to load from node, including using their normal require paths
-var mod = null;
+var thisPath = null;
+var mods = {};
 var webRequire = function (path) {
+  thisPath = path;
   require('../'+path);
-  return mod;
+  thisPath = null;
+  return mods[path];
 };
 define = function(f) {
-  mod = f(webRequire);
+  if (thisPath === null) { alert('Require Error!'); }
+  mods[thisPath] = f(webRequire);
 };
 // End of require patch
 //---------

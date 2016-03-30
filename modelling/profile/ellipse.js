@@ -1,7 +1,5 @@
 define(function(require) {
 
-var vector = require('vector');
-
 var min = Math.min;
 var max = Math.max;
 var abs = Math.abs;
