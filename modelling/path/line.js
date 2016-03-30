@@ -16,7 +16,8 @@ return function (x1, y1, x2, y2) {
     var isInSegment = (param >= 0 && param <= 1);
     if (!isInSegment) {
       return {
-        distance: Infinity,
+        param: param,
+        perpDistance: Infinity,
         cutDir: bottom(x,y).cutDir,
         perpDir: bottom(x,y).cutDir,
         curvature: 0

@@ -18,4 +18,5 @@ define = function(f) {
 //---------
 
 // Test modules
+webRequire('test/paths')();
 webRequire('test/primitives')();
