@@ -3,16 +3,9 @@ define(function(require) {
 var vector = require('vector');
 var bottom = require('modelling/bottom');
 
-var PI = Math.PI;
 var abs = Math.abs;
 var sign = Math.sign;
-var min = Math.min;
-var max = Math.max;
-var sin = Math.sin;
-var cos = Math.cos;
 var sqrt = Math.sqrt;
-var inf = Infinity;
-var pow = Math.pow;
 
 var primitives = {};
 
@@ -49,14 +42,6 @@ primitives.sphere = function (radius) {
       perpCurvature: perpCurvature
     };
   };
-};
-
-primitives.scale = function (p) {
-  return function (d) {
-    return {
-      scale: pow(1 - abs(1-d*2), p)
-    }
-  }
 };
 
 primitives.sweep = function (pathFn, profileFn, scaleFn) {
