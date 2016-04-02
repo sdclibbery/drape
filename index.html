@@ -70,9 +70,9 @@ x Break primitives.js out into appropriate modules
 x Path tests at the seam underneath the sweep function
 x Scaling along the path _should_ change the cutDir
 x cutdir is 2D
-? Do we need more than pos and cutdir?? NO!
-* Scaling along the path _should_ change the normal and curvature!
+x Remove normal and curvatures; these should becalculated later
 * Bring in bezier.js and set up a bezier path function
+* Take numerical normal/curvature calcs out of tests into their own module
 * Refactor: generate grid of surface points and then triangulate/cutlines that
 * Define an (initially uniform) sample grid
 * Simple toolpath generation: simple criss/cross for now

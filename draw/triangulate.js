@@ -1,6 +1,6 @@
 define(function(require) {
 
-var Vector = require('vector');
+var vector = require('vector');
 
 var gcodeToGl = function (arr, i, v) {
   arr[i+0] = v.x;
@@ -25,7 +25,7 @@ return function (surface) {
       var zpos = (y - vtxResY/2)*size/vtxResY;
       var s = surface(xpos, zpos);
       gcodeToGl(vtxPosns, v, s.pos);
-      gcodeToGl(vtxNorms, v, s.norm);
+      gcodeToGl(vtxNorms, v, new vector(0,0,1)); // Needs proper normal!
     }
   }
 

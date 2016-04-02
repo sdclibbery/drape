@@ -25,7 +25,6 @@ var test = function (path) {
     assert(res, x,y, r => r.cutDir.isUnit(), "cutDir normalised");
     assert(res, x,y, r => r.perpDir.isUnit(), "cutDir normalised");
     assert(res, x,y, r => r.perpDir.perpTo(r.cutDir), 'perpDir _|_ cutDir');
-    assert(res, x,y, r => r.curvature >= 0 && r.curvature <= 10, "curvature in range");
   }
 };
 

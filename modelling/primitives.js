@@ -18,10 +18,7 @@ primitives.cube = function (size) {
     var cutY = nearestToXAxis ? sign(x) : 0;
     return {
       pos: new vector(x,y,size),
-      norm: new vector(0,0,1),
-      cutDir: new vector(cutX, cutY),
-      cutCurvature: 0,
-      perpCurvature: 0
+      cutDir: new vector(cutX, cutY)
     };
   };
 };
@@ -37,10 +34,7 @@ primitives.sphere = function (radius) {
     var pos = new vector(x, y, z);
     return {
       pos: pos,
-      norm: pos.unit(),
-      cutDir: new vector(-y, x).unit(),
-      cutCurvature: 1/z,
-      perpCurvature: perpCurvature
+      cutDir: new vector(-y, x).unit()
     };
   };
 };
@@ -54,10 +48,7 @@ primitives.sweep = function (pathFn, profileFn, scaleFn) {
     var perpScaleOffset = path.perpDir.multiply(scale.gradient); // If the path curves, this won't account for it
     return {
       pos: new vector(x, y, profile.height),
-      norm: profile.gradient==0 ? new vector(0,0,1) : path.perpDir.multiply(path.side).add(new vector(0,0,1/profile.gradient)).unit(),
-      cutDir: path.cutDir.add(perpScaleOffset).unit(),
-      cutCurvature: path.curvature,
-      perpCurvature: profile.curvature
+      cutDir: path.cutDir.add(perpScaleOffset).unit()
     };
   };
 };

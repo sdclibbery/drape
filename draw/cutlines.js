@@ -1,6 +1,6 @@
 define(function(require) {
 
-var Vector = require('vector');
+var vector = require('vector');
 
 var gcodeToGl = function (arr, i, v) {
   arr[i+0] = v.x;
@@ -25,7 +25,7 @@ return function (surface) {
       var len = size*0.8/resX;
       var headLen = len*0.3;
       var headHW = len*0.2;
-      var perp = s.norm.cross(s.cutDir);
+      var perp = new vector(-s.cutDir.y, s.cutDir.x, 0);
       gcodeToGl(vtxPosns, v, s.pos.add(s.cutDir.multiply(-len*0.5)));
       gcodeToGl(vtxPosns, v+3, s.pos.add(s.cutDir.multiply(len*0.5)));
       gcodeToGl(vtxPosns, v+6, s.pos.add(s.cutDir.multiply(headLen)).add(perp.multiply(headHW)));
