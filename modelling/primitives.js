@@ -19,7 +19,7 @@ primitives.cube = function (size) {
     return {
       pos: new vector(x,y,size),
       norm: new vector(0,0,1),
-      cutDir: new vector(cutX, cutY, 0),
+      cutDir: new vector(cutX, cutY),
       cutCurvature: 0,
       perpCurvature: 0
     };
@@ -38,7 +38,7 @@ primitives.sphere = function (radius) {
     return {
       pos: pos,
       norm: pos.unit(),
-      cutDir: new vector(-y, x, 0).unit(),
+      cutDir: new vector(-y, x).unit(),
       cutCurvature: 1/z,
       perpCurvature: perpCurvature
     };
