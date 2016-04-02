@@ -4,6 +4,7 @@ var vector = require('vector');
 var bottom = require('modelling/bottom');
 
 var abs = Math.abs;
+var sgn = x => (x<0) ? -1 : 1;
 var sign = Math.sign;
 var sqrt = Math.sqrt;
 
@@ -50,10 +51,11 @@ primitives.sweep = function (pathFn, profileFn, scaleFn) {
     if (path === null) { return bottom(x,y); }
     var scale = scaleFn(path.param);
     var profile = profileFn(path.perpDistance, scale.scale);
+    var perpScaleOffset = path.perpDir.multiply(scale.gradient); // If the path curves, this won't account for it
     return {
       pos: new vector(x, y, profile.height),
-      norm: profile.gradient==0 ? new vector(0,0,1) : path.perpDir.add(new vector(0,0,1/profile.gradient)).unit(),
-      cutDir: path.cutDir,
+      norm: profile.gradient==0 ? new vector(0,0,1) : path.perpDir.multiply(path.side).add(new vector(0,0,1/profile.gradient)).unit(),
+      cutDir: path.cutDir.add(perpScaleOffset).unit(),
       cutCurvature: path.curvature,
       perpCurvature: profile.curvature
     };
