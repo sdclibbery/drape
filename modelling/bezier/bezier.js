@@ -18,10 +18,10 @@ define(function(require) {
       ZERO = {x:0,y:0,z:0};
 
   // quite needed
-  var utils = require('./utils.js');
+  var utils = require('modelling/bezier/utils');
 
   // not quite needed, but eventually this'll be useful...
-  var PolyBezier = require('./poly-bezier.js');
+  var PolyBezier = require('modelling/bezier/poly-bezier');
 
   /**
    * Bezier curve constructor. The constructor argument can be one of three things:

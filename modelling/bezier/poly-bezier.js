@@ -1,6 +1,6 @@
 define(function(require) {
 
-  var utils = require('./utils.js');
+  var utils = require('modelling/bezier/utils');
 
   /**
    * Poly Bezier
