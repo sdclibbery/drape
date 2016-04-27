@@ -45,7 +45,8 @@ primitives.sweep = function (pathFn, profileFn, scaleFn) {
     if (path === null) { return bottom(x,y); }
     var scale = scaleFn(path.param);
     var profile = profileFn(path.perpDistance, scale.scale);
-    var perpScaleOffset = path.perpDir.multiply(scale.gradient); // If the path curves, this won't account for it
+    var aspect = profile.w/path.length;
+    var perpScaleOffset = path.perpDir.multiply(aspect*scale.gradient); // If the path curves, this won't account for it ! Also doesn't account for 'end caps'
     return {
       pos: new vector(x, y, profile.height),
       cutDir: path.cutDir.add(perpScaleOffset).unit()

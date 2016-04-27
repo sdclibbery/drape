@@ -24,6 +24,7 @@ return function (hw, hh) {
     return {
       height: y,
       gradient: ny/nx,
+      w: hw*2,
       curvature: lerp(1/hws, 1/hhs, p) // Is this anything like right..??
     };
   };

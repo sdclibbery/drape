@@ -27,7 +27,8 @@ return function (x1, y1, x2, y2) {
       perpDistance: perp.length(),
       cutDir: line.unit().multiply(side),
       perpDir: perp.unit().multiply(side),
-      side: side
+      side: side,
+      length: line.length()
     };
   };
 };

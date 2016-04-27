@@ -7,9 +7,10 @@ var pow = Math.pow;
 return function (p) {
   return function (d) {
     var x = 1 - d*2;
+    var t = 1 - abs(x);
     return {
-      scale: pow(1 - abs(x), p),
-      gradient: sgn(x) * p * pow(1 - abs(x), p-1)
+      scale: pow(t, p),
+      gradient: sgn(x) * p * pow(t, p-1)
     }
   }
 };
