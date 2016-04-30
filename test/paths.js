@@ -1,6 +1,7 @@
 define(function(require) {
 
 var line = require('modelling/path/line');
+var bezier = require('modelling/path/bezier');
 
 var v2s = function (v) {
   return '(' + v.x.toFixed(3) + ',' + v.y.toFixed(3) + ')';
@@ -9,10 +10,6 @@ var v2s = function (v) {
 var assert = function (res, x,y, pred, m) {
   if (!pred(res)) { console.log(m+' at ' + v2s({x:x, y:y})+' dist: '+res.perpDistance); }
 };
-
-var nearTo = function (v1, v2, eps) {
-  return abs(v2-v1) < eps;
-}
 
 var test = function (path) {
   for (var i=0; i<100; i++) {
@@ -32,6 +29,10 @@ var testSuites = {};
 
 testSuites.line = function () {
   test(line(-0.1,-0.4, 0.1,0.4));
+};
+
+testSuites.bezier = function () {
+  test(bezier(0,0.2, 0.2,0, 0,0, 0,-0.2));
 };
 
 return function () {
