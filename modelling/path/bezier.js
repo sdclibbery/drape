@@ -17,7 +17,7 @@ return function (x1,y1, cx1,cx2, cx2,cy2, x2,y2) {
     }
     var cd = unitVec(b.derivative(p.t));
     var pd = unitVec(b.normal(p.t));
-    var v = vec(x,y).subtract(vec(p.x,p.y));
+    var v = vec(p.x,p.y).subtract(vec(x,y));
     var side = sgn(pd.dot(v));
     return {
       param: p.t,

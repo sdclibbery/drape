@@ -4,6 +4,7 @@ var vector = require('vector');
 var prim = require('modelling/primitives');
 var ellipse = require('modelling/profile/ellipse');
 var line = require('modelling/path/line');
+var bezier = require('modelling/path/bezier');
 var power = require('modelling/scale/power');
 
 var abs = Math.abs;
@@ -116,6 +117,11 @@ testSuites.lineSweptEllipseLinearScale = function () {
 
 testSuites.lineSweptEllipsePowerScale = function () {
   test(prim.sweep(line(-1,-1, 1,1), ellipse(0.5, 0.5), power(0.25)), function (surf) {
+  });
+};
+
+testSuites.bezierSweptEllipse = function () {
+  test(prim.sweep(bezier(-1,0, 0,0, 0,0, 1,0), ellipse(1, 1), power(0)), function (surf) {
   });
 };
 
