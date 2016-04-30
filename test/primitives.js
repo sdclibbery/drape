@@ -57,13 +57,19 @@ var numericalTests = function (surface, surf) {
   assert(surf, s => nearTo(s.perpCurvature, calcCurvature(spn, s, sp), 1e-4), 'perpCurvature is close to calculated perpCurvature '+surf.perpCurvature+' '+calcCurvature(spn, surf, sp));
 };
 
-var commonProperties = function (x,y, surf) {
+var nextPointAlongCutDir = function (s, surface) {
+    var nextPoint = s.pos.add(s.cutDir.multiply(0.001));
+    return surface(nextPoint.x, nextPoint.y);
+}
+
+var commonProperties = function (x,y, surf, surface) {
   assert(surf, s => s.pos.x == x, 'pos x');
   assert(surf, s => s.pos.y == y, 'pos y');
   assert(surf, s => s.pos.z >= 0, 'height min');
   assert(surf, s => s.pos.z <= 1, 'height max');
   assert(surf, s => s.pos.z == 0 || s.cutDir.cross(s.pos).z < 0, 'cutDir is clockwise');
   assert(surf, s => s.cutDir.isUnit(), 'cutDir is unit');
+  assert(surf, s => s.pos.z == 0 || nextPointAlongCutDir(s, surface).pos.z > 0, 'cutDir points back onto the primitive');
 };
 
 var test = function (surface, customProperties) {
@@ -71,7 +77,7 @@ var test = function (surface, customProperties) {
     var x = 1*(Math.random()-0.5);
     var y = 1*(Math.random()-0.5);
     var surf = surface(x,y);
-    commonProperties(x,y, surf);
+    commonProperties(x,y, surf, surface);
 //    numericalTests(surface, surf);
     if (surf.pos.z > 0) {
       customProperties(surf);
