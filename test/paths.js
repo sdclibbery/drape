@@ -18,9 +18,10 @@ var test = function (path) {
     var res = path(x,y);
     if (res === null) { continue; }
     assert(res, x,y, r => r.param >= 0 && r.param <= 1, "param in range");
-    assert(res, x,y, r => r.perpDistance < 1, "perpDistance");
+    assert(res, x,y, r => r.perpDistance < 1, "perpDistance max");
+    assert(res, x,y, r => r.perpDistance >= 0, "perpDistance min");
     assert(res, x,y, r => r.cutDir.isUnit(), "cutDir normalised");
-    assert(res, x,y, r => r.perpDir.isUnit(), "cutDir normalised");
+    assert(res, x,y, r => r.perpDir.isUnit(), "perpDir normalised");
     assert(res, x,y, r => r.perpDir.perpTo(r.cutDir), 'perpDir _|_ cutDir');
   }
 };
