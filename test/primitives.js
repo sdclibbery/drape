@@ -19,9 +19,11 @@ var assert = function (surf, pred, m) {
   if (!pred(surf)) { console.log(m+' at ' + v2s(surf.pos) + ' cut: ' + v2s(surf.cutDir)); }
 };
 
-var commonProperties = function (surf) {
-  assert(surf, s => s.cutDir.isUnit(), 'cutDir is unit');
+var commonProperties = function (x,y, surf) {
+  assert(surf, s => s.pos.x == x, 'pos x');
+  assert(surf, s => s.pos.y == y, 'pos y');
   assert(surf, s => s.pos.z == 0 || s.cutDir.cross(s.pos).z < 0, 'cutDir is clockwise');
+  assert(surf, s => s.cutDir.isUnit(), 'cutDir is unit');
 };
 
 var deltaDistance = 1e-5;
@@ -67,7 +69,7 @@ var test = function (surface, customProperties) {
     var x = 1*(Math.random()-0.5);
     var y = 1*(Math.random()-0.5);
     var surf = surface(x,y);
-    commonProperties(surf);
+    commonProperties(x,y, surf);
 //    numericalTests(surface, surf);
     if (surf.pos.z > 0) {
       customProperties(surf);
@@ -100,7 +102,12 @@ testSuites.lineSweptEllipseDiagonal = function () {
 };
 
 testSuites.lineSweptEllipseLinearScale = function () {
-  test(prim.sweep(line(-1,-1, 1,1), ellipse(0.5, 0.5), power(0.5)), function (surf) {
+  test(prim.sweep(line(-1,-1, 1,1), ellipse(0.5, 0.5), power(1)), function (surf) {
+  });
+};
+
+testSuites.lineSweptEllipsePowerScale = function () {
+  test(prim.sweep(line(-1,-1, 1,1), ellipse(0.5, 0.5), power(0.25)), function (surf) {
   });
 };
 
