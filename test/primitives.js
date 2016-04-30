@@ -19,13 +19,6 @@ var assert = function (surf, pred, m) {
   if (!pred(surf)) { console.log(m+' at ' + v2s(surf.pos) + ' cut: ' + v2s(surf.cutDir)); }
 };
 
-var commonProperties = function (x,y, surf) {
-  assert(surf, s => s.pos.x == x, 'pos x');
-  assert(surf, s => s.pos.y == y, 'pos y');
-  assert(surf, s => s.pos.z == 0 || s.cutDir.cross(s.pos).z < 0, 'cutDir is clockwise');
-  assert(surf, s => s.cutDir.isUnit(), 'cutDir is unit');
-};
-
 var deltaDistance = 1e-5;
 var delta = function (surface, surf, dir) {
   var hdir = new vector(dir.x, dir.y, 0).unit();
@@ -64,6 +57,15 @@ var numericalTests = function (surface, surf) {
   assert(surf, s => nearTo(s.perpCurvature, calcCurvature(spn, s, sp), 1e-4), 'perpCurvature is close to calculated perpCurvature '+surf.perpCurvature+' '+calcCurvature(spn, surf, sp));
 };
 
+var commonProperties = function (x,y, surf) {
+  assert(surf, s => s.pos.x == x, 'pos x');
+  assert(surf, s => s.pos.y == y, 'pos y');
+  assert(surf, s => s.pos.z >= 0, 'height min');
+  assert(surf, s => s.pos.z <= 1, 'height max');
+  assert(surf, s => s.pos.z == 0 || s.cutDir.cross(s.pos).z < 0, 'cutDir is clockwise');
+  assert(surf, s => s.cutDir.isUnit(), 'cutDir is unit');
+};
+
 var test = function (surface, customProperties) {
   for (var i=0; i<100; i++) {
     var x = 1*(Math.random()-0.5);
@@ -80,7 +82,7 @@ var test = function (surface, customProperties) {
 var testSuites = {};
 
 testSuites.cube = function () {
-  test(prim.cube(2), function (surf) {
+  test(prim.cube(1), function (surf) {
     assert(surf, s => abs(s.cutDir.x) === 0 || abs(s.cutDir.y) === 0, 'cutDir always on an axis');
   });
 };
