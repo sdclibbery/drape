@@ -73,8 +73,8 @@ x cutdir is 2D
 x Remove normal and curvatures; these should becalculated later
 x Bring in bezier.js
 x Set up a bezier path function
-* ! cutdir is same all the way across the profile section; it should surely turn in less near the centreline?
-* ! power(0): curdir does not curve round end caps
+x ! power(0): cutdir does not curve round end caps !! SHOULD NOT BE ANY END CAPS!
+* Unit tests for bezier
 * Take numerical normal/curvature calcs out of tests into their own module
 * Refactor: generate grid of surface points and then triangulate/cutlines that
 * Define an (initially uniform) sample grid
@@ -82,6 +82,7 @@ x Set up a bezier path function
 * Triangulate from toolpath; generate cutlines visualisation from toolpath
 * Generate tool path from surface info considered as a vector field
  * Property tests
+* ? cutdir is same all the way across the profile section; it should surely turn in less near the centreline? ?? Is this true?
 * Modify mesh before toolpath generation: Coalesce samples that have low curvature
  * Property tests
 * Add samples where curvature is high
