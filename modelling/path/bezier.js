@@ -23,7 +23,7 @@ return function (x1,y1, cx1,cx2, cx2,cy2, x2,y2) {
       param: p.t,
       perpDistance: p.d,
       cutDir: cd.multiply(side),
-      perpDir: pd,
+      perpDir: pd.negative(),
       length: b.length()
     };
   };
