@@ -68,7 +68,7 @@ var commonProperties = function (x,y, surf, surface) {
   assert(surf, s => s.pos.y == y, 'pos y');
   assert(surf, s => s.pos.z >= 0, 'height min');
   assert(surf, s => s.pos.z <= 1, 'height max');
-  assert(surf, s => s.pos.z == 0 || s.cutDir.cross(s.pos).z < 0, 'cutDir is clockwise');
+  assert(surf, s => s.pos.z == 0 || s.cutDir.cross(s.pos).z <= 0, 'cutDir is clockwise');
   assert(surf, s => s.cutDir.isUnit(), 'cutDir is unit');
   assert(surf, s => s.pos.z == 0 || nextPointAlongCutDir(s, surface).pos.z > 0, 'cutDir points back onto the primitive');
 };
@@ -101,29 +101,28 @@ testSuites.sphere = function () {
 };
 
 testSuites.lineSweptEllipse = function () {
-  test(prim.sweep(line(-1,0, 1,0), ellipse(1, 1), power(0)), function (surf) {
-  });
+  test(prim.sweep(line(-1,0, 1,0), ellipse(1, 1), power(0)), function (surf) {});
 };
 
 testSuites.lineSweptEllipseDiagonal = function () {
-  test(prim.sweep(line(-1,-1, 1,1), ellipse(0.5, 0.5), power(0)), function (surf) {
-  });
+  test(prim.sweep(line(-1,-1, 1,1), ellipse(0.5, 0.5), power(0)), function (surf) {});
 };
 
 testSuites.lineSweptEllipseLinearScale = function () {
-  test(prim.sweep(line(-1,-1, 1,1), ellipse(0.5, 0.5), power(1)), function (surf) {
-  });
+  test(prim.sweep(line(-1,-1, 1,1), ellipse(0.5, 0.5), power(1)), function (surf) {});
 };
 
 testSuites.lineSweptEllipsePowerScale = function () {
-  test(prim.sweep(line(-1,-1, 1,1), ellipse(0.5, 0.5), power(0.25)), function (surf) {
-  });
+  test(prim.sweep(line(-1,-1, 1,1), ellipse(0.5, 0.5), power(0.25)), function (surf) {});
 };
 
 testSuites.bezierSweptEllipse = function () {
-  test(prim.sweep(bezier(-1,0, 0,0, 0,0, 1,0), ellipse(1, 1), power(0)), function (surf) {
-  });
+  test(prim.sweep(bezier(-1,0, 0,0, 0,0, 1,0), ellipse(1, 1), power(0)), function (surf) {});
 };
+
+//testSuites.bezierSweptEllipseCurved = function () {
+//  test(prim.sweep(bezier(-1,-0.1, 0,0, 0,0, 1,-0.1), ellipse(1, 1), power(0)), function (surf) {});
+//};
 
 return function () {
   for (name in testSuites) {
