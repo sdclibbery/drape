@@ -120,9 +120,9 @@ testSuites.bezierSweptEllipse = function () {
   test(prim.sweep(bezier(-1,0, 0,0, 0,0, 1,0), ellipse(1, 1), power(0)), function (surf) {});
 };
 
-//testSuites.bezierSweptEllipseCurved = function () {
-//  test(prim.sweep(bezier(-1,-0.1, 0,0, 0,0, 1,-0.1), ellipse(1, 1), power(0)), function (surf) {});
-//};
+testSuites.bezierSweptEllipsePowerScale = function () {
+  test(prim.sweep(bezier(-1,0, 0,0, 0,0, 1,0), ellipse(1, 1), power(0.25)), function (surf) {});
+};
 
 return function () {
   for (name in testSuites) {
