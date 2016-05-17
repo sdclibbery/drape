@@ -23,6 +23,7 @@ return csg.union([
 //              translate(0.1, 0.1, prim.cube(0.1)),
 //              prim.sweep(line(0,0.2, 0,-0.2), ellipse(0.07, 0.07), power(0.25)),
               prim.sweep(bezier(0.1,0.2, -0.3,0.35, 0.3,-0.35, -0.1,-0.2), ellipse(0.02, 0.05), power(0.25)),
+              prim.sweep(bezier(0.1,0.2, -0.3,0.35, 0.3,-0.35, -0.1,-0.2), ellipse(0.05, 0.02), power(0.25)),
             ]);
 
 });

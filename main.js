@@ -23,7 +23,6 @@ if (!ctxGl) { document.getElementById('info').innerHTML = 'WebGL not supported!'
 
 var mesh = triangulate(surface);
 var lines = cutLines(surface);
-
 var render = function () {
   var ms = camera.toMatrices(canvas.width, canvas.height);
   drawMesh(ctxGl, mesh, ms.view, ms.perspective);
