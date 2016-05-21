@@ -3,9 +3,9 @@ define(function(require) {
 var vector = require('vector');
 
 return function (surface) {
-  var resX = 50;
-  var resY = 50;
-  var size = 0.5;
+  var resX = 60;
+  var resY = 60;
+  var size = surface.size;
 
   var nodes = [];
   for (var y = 0; y < resY; y++) {
