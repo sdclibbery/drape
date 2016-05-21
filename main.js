@@ -8,6 +8,7 @@ var touch = require('input/touch');
 var mouse = require('input/mouse');
 var camera = require('camera');
 var surface = require('surface');
+var toolpath = require('cnc/toolpath');
 
 var canvas = document.getElementById("canvas");
 function onResize() {
@@ -21,8 +22,9 @@ var ctxGl = canvas.getContext("webgl");
 if (!ctxGl) { ctxGl = canvas.getContext("experimental-webgl"); }
 if (!ctxGl) { document.getElementById('info').innerHTML = 'WebGL not supported!'; }
 
-var mesh = triangulate(surface);
-var lines = cutLines(surface);
+var toolpath = toolpath(surface);
+var mesh = triangulate(toolpath);
+var lines = cutLines(toolpath);
 var render = function () {
   var ms = camera.toMatrices(canvas.width, canvas.height);
   drawMesh(ctxGl, mesh, ms.view, ms.perspective);
