@@ -9,11 +9,11 @@ var gcodeToGl = function (arr, i, v) {
 };
 
 return function (surface) {
-  var resX = 50;
-  var resY = 50;
+  var resX = 60;
+  var resY = 60;
+  var size = surface.size;
   var vtxResX = resX+1;
   var vtxResY = resY+1;
-  var size = 0.5;
 
   var numVtxs = vtxResX*vtxResY;
   var vtxNorms = new Float32Array(numVtxs*3);
@@ -22,9 +22,9 @@ return function (surface) {
     for (var x = 0; x < vtxResX; x++) {
       var v = (x + y*vtxResX) * 3;
       var xpos = (x - vtxResX/2)*size/vtxResX;
-      var zpos = (y - vtxResY/2)*size/vtxResY;
-      var s = surface(xpos, zpos);
-      gcodeToGl(vtxPosns, v, s.pos);
+      var ypos = (y - vtxResY/2)*size/vtxResY;
+      var s = surface(xpos, ypos);
+      gcodeToGl(vtxPosns, v, s.pos.add(new vector(0,0,-0.003)));
       gcodeToGl(vtxNorms, v, new vector(0,0,1)); // Needs proper normal!
     }
   }

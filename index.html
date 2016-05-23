@@ -81,13 +81,17 @@ x Simple toolpath generation: simple criss/cross for now
   x Stub array for now
   x Cutlines from toolpath
  x Generate criss-cross toolpath for actual surface
-* Triangulate mesh from toolpath
- * Calculate normals for rendering
-  * Take numerical normal/curvature calcs out of tests into their own module
-* Generate tool path from surface info considered as a vector field
+* Resurrect old surface/cutdir rendering as a surface visualisation aid
+* Calculate normals for rendering
+ * Take numerical normal/curvature calcs out of tests into their own module
+* GCode generation from toolpath
+ * Button to export
+ * Save a file
+ * Generate GCode from toolpath
+* Generate tool path that follows surface features
  * Property tests
 * ? cutdir is same all the way across the profile section; it should surely turn in less near the centreline? ?? Is this true?
-* Modify mesh before toolpath generation: Coalesce samples that have low curvature
+* Modify sampling of toolpath: Coalesce samples that have low curvature
  * Property tests
 * Add samples where curvature is high
  * Property tests
