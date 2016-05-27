@@ -4,7 +4,7 @@ var drawMesh = require('draw/mesh');
 var drawLines = require('draw/lines');
 var triangulate = require('draw/triangulate');
 var cutDirLines = require('draw/cutdirlines');
-var cutLines = require('draw/cutlines');
+var toolpathLines = require('draw/toolpathlines');
 var touch = require('input/touch');
 var mouse = require('input/mouse');
 var camera = require('camera');
@@ -26,11 +26,11 @@ if (!ctxGl) { document.getElementById('info').innerHTML = 'WebGL not supported!'
 var toolpath = toolpath(surface);
 var drawSurface = drawMesh(ctxGl, triangulate(surface));
 var drawCutDir = drawLines(ctxGl, cutDirLines(surface));
-var drawToolPath = drawLines(ctxGl, cutLines(toolpath));
+var drawToolPath = drawLines(ctxGl, toolpathLines(toolpath));
 var render = function () {
   var ms = camera.toMatrices(canvas.width, canvas.height);
   drawSurface(ctxGl, ms.view, ms.perspective);
-//  drawCutDir(ctxGl, ms.view, ms.perspective);
+  drawCutDir(ctxGl, ms.view, ms.perspective);
   drawToolPath(ctxGl, ms.view, ms.perspective);
 };
 render();
