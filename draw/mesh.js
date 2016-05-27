@@ -28,44 +28,44 @@ var frgShader = ""
 +"    gl_FragColor = vec4(colour, 1);"
 +"  }";
 
-var program = null;
-var posAttr = null;
-var normAttr = null;
-var posBuf = null;
-var normBuf = null;
-var indexBuffer = null;
-var viewUnif = null;
-var perspUnif = null;
+return function (gl, mesh) {
+  var program = null;
+  var posAttr = null;
+  var normAttr = null;
+  var posBuf = null;
+  var normBuf = null;
+  var indexBuffer = null;
+  var viewUnif = null;
+  var perspUnif = null;
 
-return function (gl, mesh, view, perspective) {
-  if (program === null) {
-    program = draw.loadProgram(gl, [
-      draw.loadShader(gl, vtxShader, gl.VERTEX_SHADER),
-      draw.loadShader(gl, frgShader, gl.FRAGMENT_SHADER)
-    ]);
-    posBuf = gl.createBuffer();
-    normBuf = gl.createBuffer();
-    posAttr = gl.getAttribLocation(program, "posIn");
-    normAttr = gl.getAttribLocation(program, "normIn");
-    perspUnif = gl.getUniformLocation(program, "perspIn");
-    viewUnif = gl.getUniformLocation(program, "viewIn");
-    indexBuffer = draw.createIndexBuffer(gl, mesh.indexes);
-  }
+  program = draw.loadProgram(gl, [
+    draw.loadShader(gl, vtxShader, gl.VERTEX_SHADER),
+    draw.loadShader(gl, frgShader, gl.FRAGMENT_SHADER)
+  ]);
+  posBuf = gl.createBuffer();
+  normBuf = gl.createBuffer();
+  posAttr = gl.getAttribLocation(program, "posIn");
+  normAttr = gl.getAttribLocation(program, "normIn");
+  perspUnif = gl.getUniformLocation(program, "perspIn");
+  viewUnif = gl.getUniformLocation(program, "viewIn");
+  indexBuffer = draw.createIndexBuffer(gl, mesh.indexes);
 
-  gl.useProgram(program);
+  return function (gl, view, perspective) {
+    gl.useProgram(program);
 
-  gl.uniformMatrix4fv(viewUnif, false, view);
-  gl.uniformMatrix4fv(perspUnif, false, perspective.m);
+    gl.uniformMatrix4fv(viewUnif, false, view);
+    gl.uniformMatrix4fv(perspUnif, false, perspective.m);
 
-  draw.loadVertexAttrib(gl, posBuf, posAttr, mesh.posns, 3);
-  draw.loadVertexAttrib(gl, normBuf, normAttr, mesh.norms, 3);
+    draw.loadVertexAttrib(gl, posBuf, posAttr, mesh.posns, 3);
+    draw.loadVertexAttrib(gl, normBuf, normAttr, mesh.norms, 3);
 
-  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
 
-  gl.disable(gl.BLEND);
-  gl.enable(gl.DEPTH_TEST);
-  gl.disable(gl.CULL_FACE);
-  gl.drawElements(gl.TRIANGLES, mesh.numIndices, gl.UNSIGNED_SHORT, 0);
-};
+    gl.disable(gl.BLEND);
+    gl.enable(gl.DEPTH_TEST);
+    gl.disable(gl.CULL_FACE);
+    gl.drawElements(gl.TRIANGLES, mesh.numIndices, gl.UNSIGNED_SHORT, 0);
+  };
+}
 
 });
