@@ -18,6 +18,7 @@
 </head>
 <body>
   <canvas id="canvas" class="fullscreen" style="width:100%; height:100%;"></canvas>
+  <div onclick="window.export()" ontouchstart="window.export()" style="position:absolute; top:30px; left:30px; background-color:#c0c0c0; border:black 1px solid; padding:6px;">Export</div>
 <script data-main="main" src="require.js">
 /* TODO
 
@@ -92,6 +93,7 @@ x draw/lines and draw/mesh should be instantiable and not have static data!
 * Generate tool path that follows surface features
  * Property tests
 * ? cutdir is same all the way across the profile section; it should surely turn in less near the centreline? ?? Is this true?
+? Editing...
 * Modify sampling of toolpath: Coalesce samples that have low curvature
  * Property tests
 * Add samples where curvature is high
