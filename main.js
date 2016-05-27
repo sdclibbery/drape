@@ -30,7 +30,7 @@ var drawToolPath = drawLines(ctxGl, toolpathLines(toolpath));
 var render = function () {
   var ms = camera.toMatrices(canvas.width, canvas.height);
   drawSurface(ctxGl, ms.view, ms.perspective);
-  drawCutDir(ctxGl, ms.view, ms.perspective);
+//  drawCutDir(ctxGl, ms.view, ms.perspective);
   drawToolPath(ctxGl, ms.view, ms.perspective);
 };
 render();

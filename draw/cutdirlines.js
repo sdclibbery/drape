@@ -9,9 +9,11 @@ var gcodeToGl = function (arr, i, v) {
 };
 
 return function (surface) {
-  var resX = 50;
-  var resY = 50;
-  var size = 0.5;
+  var resX = 60;
+  var resY = 60;
+  var size = surface.size;
+  var vtxResX = resX+1;
+  var vtxResY = resY+1;
 
   var numVtxs = resX*resY*4;
   var vtxPosns = new Float32Array(numVtxs*3);
