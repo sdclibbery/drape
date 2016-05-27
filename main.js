@@ -25,12 +25,13 @@ if (!ctxGl) { document.getElementById('info').innerHTML = 'WebGL not supported!'
 
 var toolpath = toolpath(surface);
 var mesh = triangulate(surface);
-//var lines = cutDirLines(surface);
-var lines = cutLines(toolpath);
+var drawCutDir = drawLines(ctxGl, cutDirLines(surface));
+var drawToolPath = drawLines(ctxGl, cutLines(toolpath));
 var render = function () {
   var ms = camera.toMatrices(canvas.width, canvas.height);
   drawMesh(ctxGl, mesh, ms.view, ms.perspective);
-  drawLines(ctxGl, lines, ms.view, ms.perspective);
+//  drawCutDir(ctxGl, ms.view, ms.perspective);
+  drawToolPath(ctxGl, ms.view, ms.perspective);
 };
 render();
 
