@@ -60,11 +60,10 @@ window.export = function () {
   gcode += 'X-0.5 Y0. I0. J0.5\n';
   gcode += 'G01 Z0.1 F5.\n';
   gcode += 'G00 X0. Y0. Z0.25\n';
-  var a = document.createElement("a");
-  var file = new Blob([gcode], {type: "text/plain"});
-  a.href = URL.createObjectURL(file);
-  a.download = "drape-export.gcode";
-  a.click();
+
+  newWindow = window.open("data:text/plain," + encodeURIComponent(gcode), "_blank");
+  newWindow.document.title = "draped.gcode";
+  newWindow.focus();
 }
 
 touch.pan = function (dx, dy) {
