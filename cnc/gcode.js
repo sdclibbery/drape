@@ -13,6 +13,10 @@ var builder = function () {
   }
 }
 
+var fmt = function (n) {
+  return (n*1000).toFixed(2);
+}
+
 return function (toolpath) {
   var b = new builder();
   b.comment('GCODE EXPORTED BY DRAPE.JS');
@@ -23,11 +27,9 @@ return function (toolpath) {
   b.add('G00 X0 Y0 Z0');
 
   b.add('F180');
-  b.add('G01 X0 Y0 Z-10');
-  b.add('G01 X10 Y0 Z-10');
-  b.add('G01 X10 Y10 Z-10');
-  b.add('G01 X0 Y10 Z-10');
-  b.add('G01 X0 Y0 Z-10');
+  toolpath.map(function (node) {
+    b.add('G01 X'+fmt(node.pos.x)+' Y'+fmt(node.pos.y)+' Z'+fmt(node.pos.z));
+  });
 
   b.add('G00 X0 Y0 Z0');
   return b.gcode();

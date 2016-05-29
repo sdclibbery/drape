@@ -5,7 +5,7 @@ var vector = require('vector');
 
 var assertLine = function (actual, line) {
   if (actual.indexOf(line) === -1) {
-    console.log(line+' not found in output');
+    console.log('! '+line+' not found in output');
   }
 }
 
@@ -36,15 +36,15 @@ tests.settings = function () {
   ]);
 }
 
-/*
 tests.oneCut = function () {
   testGCode([
-    cut(0,0,0)
+    cut(0,0,0),
+    cut(0.01,0.01,0)
   ],[
-    'G01 X0 Y0 Z0'
+    'G01 X10.00 Y10.00 Z0.00'
   ]);
 }
-*/
+
 return function () {
   for (name in tests) {
     console.log('gcode '+name);
