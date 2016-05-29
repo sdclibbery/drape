@@ -37,7 +37,8 @@ var render = function () {
 render();
 
 window.export = function () {
-  newWindow = window.open("data:text/plain," + encodeURIComponent(gcode(toolpath)), "_blank");
+  var code = gcode(toolpath);
+  newWindow = window.open("data:text/plain," + encodeURIComponent(code), "_blank");
   newWindow.document.title = "draped.gcode";
   newWindow.focus();
 }

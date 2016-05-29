@@ -20,3 +20,4 @@ define = function(f) {
 // Test modules
 webRequire('test/paths')();
 webRequire('test/primitives')();
+webRequire('test/gcode')();
