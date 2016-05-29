@@ -29,6 +29,13 @@ tests.attribution = function () {
   ]);
 }
 
+tests.settings = function () {
+  testGCode([
+  ],[
+    'G17','G21','G90'
+  ]);
+}
+
 /*
 tests.oneCut = function () {
   testGCode([
