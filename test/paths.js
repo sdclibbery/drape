@@ -38,7 +38,7 @@ testSuites.bezier = function () {
 
 return function () {
   for (name in testSuites) {
-    console.log(name);
+    console.log('path '+name);
     testSuites[name]();
   }
 };

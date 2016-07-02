@@ -85,7 +85,7 @@ testSuites.bezierSweptEllipsePowerScale = function () {
 
 return function () {
   for (name in testSuites) {
-    console.log(name);
+    console.log('primitive '+name);
     testSuites[name]();
   }
 };

@@ -86,13 +86,18 @@ x Resurrect old surface/cutdir rendering as a surface visualisation aid
  x Calculate normals for rendering
  x cutDir arrows visualisation
 x draw/lines and draw/mesh should be instantiable and not have static data!
-* GCode generation from toolpath
+x GCode generation from toolpath
  x Button to export
  x Save a file
- * Generate GCode from toolpath
-  * Test driven!!
+ x Generate GCode from toolpath
 * Generate tool path that follows surface features
  * Property tests
+  * All points on the surface are within a half-tool width of some part of the toolpath
+  * All points on the surface are cut to their correct height to within some tolerance
+  * The toolpath points along the cutdirection at every point on the surface to within some tolerance
+  * On all points the normal of the cut surface is close to the normal of the surface
+  * On all points the curvature of the cut surface is close to the curvature of the surface
+  * Something about length or time of toolpath?
 * ? cutdir is same all the way across the profile section; it should surely turn in less near the centreline? ?? Is this true?
 ? Editing...
 * Modify sampling of toolpath: Coalesce samples that have low curvature
@@ -101,6 +106,7 @@ x draw/lines and draw/mesh should be instantiable and not have static data!
  * Property tests
 * Find discontinuities and increase sampling(?)
  * Property tests
+* Write info on tool, coord systems etc into the GCode
 * Two finger drag to pan
 
 */

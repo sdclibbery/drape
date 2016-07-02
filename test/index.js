@@ -21,3 +21,4 @@ define = function(f) {
 webRequire('test/paths')();
 webRequire('test/primitives')();
 webRequire('test/gcode')();
+webRequire('test/toolpath')();
