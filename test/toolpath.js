@@ -16,12 +16,12 @@ var distanceToLine = function (p, a, b) {
   return perp.length();
 };
 
-var distanceTo = function (p, toolpath) {
+var distanceToToolpath = function (p, toolpath) {
   var best = Infinity;
-  toolpath.map(function (node, idx) {
+  toolpath.map(function (_, idx) {
     if (idx === 0) { return; }
-    var a = toolpath[idx-1].pos;
-    var b = node.pos;
+    var a = toolpath[idx].pos;
+    var b = toolpath[idx-1].pos;
     best = Math.min(best, distanceToLine(p, a, b));
   });
   return best;
@@ -36,20 +36,21 @@ var expect = function (actual, id) {
     }
   } };
 };
-var equalTo = e => (a => ({ result: (a === e), msg: 'expected '+a+' to be '+e }));
-var lessThan = e => (a => ({ result: (a < e), msg: 'expected '+a+' to be less than '+e }));
+var equalTo = e => (a => ({ result: (a === e), msg: 'expected '+a.toFixed(3)+' to be '+e.toFixed(3) }));
+var lessThan = e => (a => ({ result: (a < e), msg: 'expected '+a.toFixed(3)+' to be less than '+e.toFixed(3) }));
 
 var tests = {};
 
 tests.allPointsOnSurfaceAreCoveredByToolpath = function () {
-  var surface = prim.cube(0.5);
-  surface.size = 0.6;
+  var surface = prim.cube(0.8);
+  surface.size = 1;
   var tp = toolpath(surface);
   for (var i=0; i<100; i++) {
     var x = 1*(Math.random()-0.5);
     var y = 1*(Math.random()-0.5);
-    var distance = distanceTo(new vector(x, y), tp);
-    expect(distance, x+','+y).toBe(lessThan(tp.toolRadius));
+    var s = surface(x,y);
+    var distance = distanceToToolpath(s.pos, tp);
+    expect(distance, s.pos.toString()).toBe(lessThan(tp.toolRadius));
   }
 }
 
