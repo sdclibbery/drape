@@ -8,9 +8,9 @@ return function (surface) {
   tp.toolRadius = surface.size / res;
   var size = surface.size;
 
-  for (var y = 0; y < res; y++) {
-    for (var xl = 0; xl < res; xl++) {
-      if (y%2) { x = res - 1 - xl; } else { x = xl; }
+  for (var y = 0; y <= res; y++) {
+    for (var xl = 0; xl <= res; xl++) {
+      if (y%2) { x = res - xl; } else { x = xl; }
       var posx = (x - res/2)*size/res;
       var posy = (y - res/2)*size/res;
       tp.push({ pos: surface(posx, posy).pos, });

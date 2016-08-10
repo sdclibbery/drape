@@ -3,6 +3,7 @@ define(function(require) {
 var toolpath = require('cnc/toolpath');
 var vector = require('vector');
 var prim = require('modelling/primitives');
+var bottom = require('modelling/bottom');
 
 var abs = Math.abs;
 
@@ -32,15 +33,17 @@ tests.distanceToLine = function () {
 };
 
 tests.allPointsOnSurfaceAreCoveredByToolpath = function () {
-  var surface = prim.cube(0.8);
+  var surface = (x,y) => bottom(x,y);//prim.cube(0.8);
   surface.size = 1;
   var tp = toolpath(surface);
   for (var i=0; i<1000; i++) {
     var x = 1*(Math.random()-0.5);
     var y = 1*(Math.random()-0.5);
     var s = surface(x,y);
-    var distance = distanceToToolpath(s.pos, tp);
-    expect(distance, s.pos.toString()).toBe(lessThan(tp.toolRadius));
+    var nearest = nearestPointsOnToolpath(s.pos, tp);
+    var distance = distanceToLine(s.pos, nearest[0], nearest[1]);
+    var msg = s.pos.toString() + " near: " + nearest;
+    expect(distance, msg).toBe(lessThan(tp.toolRadius));
   }
 }
 
@@ -56,11 +59,6 @@ tests.allPointsOnSurfaceAreCutToCorrectHeight = function () {
     expect(height, s.pos.toString()).toBe(near(s.pos.z, 1e-4));
   }
 }
-
-var distanceToToolpath = function (p, toolpath) {
-  var nearest = nearestPointsOnToolpath(p, toolpath);
-  return distanceToLine(p, nearest[0], nearest[1]);
-};
 
 var distanceToLine = function (p, a, b) {
   var nearest = nearestPointOnLine(p, a, b);

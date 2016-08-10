@@ -93,7 +93,13 @@ x GCode generation from toolpath
 * Generate tool path that follows surface features
  * Property tests
   x All points on the surface are within a half-tool width of some part of the toolpath
+   ! fix failing test
+    ! two seperate problem cases: one at edge of surface, one at edge of cube
+    * Need tests for nearestPointsOnToolpath and nearestPointOnLine
+    ! Also try sphere!
+   * DONT expect bottom to be covered by toolpath
   * All points on the surface are cut to their correct height to within some tolerance
+   * Need to include scalloping
   * The toolpath points along the cutdirection at every point on the surface to within some tolerance
   * On all points the normal of the cut surface is close to the normal of the surface
   * On all points the curvature of the cut surface is close to the curvature of the surface
