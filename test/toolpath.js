@@ -16,9 +16,9 @@ var expect = function (actual, id) {
     }
   } };
 };
-var equalTo = e => (a => ({ result: (a === e), msg: 'expected '+a.toFixed(3)+' to be '+e.toFixed(3) }));
-var lessThan = e => (a => ({ result: (a < e), msg: 'expected '+a.toFixed(3)+' to be less than '+e.toFixed(3) }));
-var near = (e, eps) => (a => ({ result: (abs(a-e) < eps), msg: 'expected '+a.toFixed(3)+' to be near to '+e.toFixed(3) }));
+var equalTo = e => (a => ({ result: (a === e), msg: 'expected '+a.toFixed(5)+' to be '+e.toFixed(5) }));
+var lessThan = e => (a => ({ result: (a < e), msg: 'expected '+a.toFixed(5)+' to be less than '+e.toFixed(5) }));
+var near = (e, eps) => (a => ({ result: (abs(a-e) < eps), msg: 'expected '+a.toFixed(5)+' to be near to '+e.toFixed(5) }));
 
 var tests = {};
 
@@ -30,10 +30,12 @@ tests.distanceToLine = function () {
   expect(distanceToLine(v(3,0), v(2,1), v(5,1)), 't4').toBe(equalTo(1));
   expect(distanceToLine(v(5,1), v(2,1), v(5,1)), 't5').toBe(equalTo(0));
   expect(distanceToLine(v(6,1), v(2,1), v(5,1)), 't6').toBe(equalTo(1));
+
+  expect(distanceToLine(v(-0.401,-0.312), v(-0.417,-0.317), v(-0.400,-0.317)), 't7').toBe(lessThan(0.017));
 };
 
 tests.allPointsOnSurfaceAreCoveredByToolpath = function () {
-  var surface = (x,y) => bottom(x,y);//prim.cube(0.8);
+  var surface = prim.cube(0.8);
   surface.size = 1;
   var tp = toolpath(surface);
   for (var i=0; i<1000; i++) {
@@ -42,7 +44,7 @@ tests.allPointsOnSurfaceAreCoveredByToolpath = function () {
     var s = surface(x,y);
     var nearest = nearestPointsOnToolpath(s.pos, tp);
     var distance = distanceToLine(s.pos, nearest[0], nearest[1]);
-    var msg = s.pos.toString() + " near: " + nearest;
+    var msg = s.pos + " near: " + nearest;
     expect(distance, msg).toBe(lessThan(tp.toolRadius));
   }
 }
@@ -56,7 +58,7 @@ tests.allPointsOnSurfaceAreCutToCorrectHeight = function () {
     var y = 1*(Math.random()-0.5);
     var s = surface(x,y);
     var height = heightFromToolpath(s.pos, tp);
-    expect(height, s.pos.toString()).toBe(near(s.pos.z, 1e-4));
+    expect(height, s.pos).toBe(near(s.pos.z, 1e-4));
   }
 }
 

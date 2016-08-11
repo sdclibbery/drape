@@ -101,8 +101,10 @@ Vector.prototype = {
     this.x = x; this.y = y; this.z = z;
     return this;
   },
-  toString: function() {
-    return '(' + this.x.toFixed(3) + ',' + this.y.toFixed(3) + ','+this.z.toFixed(3) + ')';
+  toString: function(p) {
+    p = p || 5;
+    var zStr = this.z ? ','+this.z.toFixed(p) : ',0';
+    return '(' + this.x.toFixed(p) + ',' + this.y.toFixed(p) + zStr + ')';
   }
 };
 

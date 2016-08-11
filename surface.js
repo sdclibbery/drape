@@ -28,7 +28,7 @@ var surface = csg.union([
             ]);
 surface.size = 0.6;
 
-surface = (x,y) => bottom(x,y);//prim.cube(0.8);
+surface = prim.cube(0.8);
 surface.size = 1;
 
 return surface;
