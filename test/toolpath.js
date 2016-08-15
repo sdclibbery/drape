@@ -18,7 +18,8 @@ var expect = function (actual, id) {
 };
 var equalTo = e => (a => ({ result: (a === e), msg: 'expected '+a.toFixed(5)+' to be '+e.toFixed(5) }));
 var lessThan = e => (a => ({ result: (a < e), msg: 'expected '+a.toFixed(5)+' to be less than '+e.toFixed(5) }));
-var near = (e, eps) => (a => ({ result: (abs(a-e) < eps), msg: 'expected '+a.toFixed(5)+' to be near to '+e.toFixed(5) }));
+var near = (e, eps) => (a => ({ result: (abs(a-e) < eps), msg: 'expected '+a.toString(5)+' to be near to '+e.toString(5) }));
+var vectorNearTo = e => (a => ({ result: a.nearTo(e), msg: 'expected '+a.toString(5)+' to be near to '+e.toString(5) }));
 
 var tests = {};
 
@@ -32,6 +33,16 @@ tests.distanceToLine = function () {
   expect(distanceToLine(v(6,1), v(2,1), v(5,1)), 't6').toBe(equalTo(1));
 
   expect(distanceToLine(v(-0.401,-0.312), v(-0.417,-0.317), v(-0.400,-0.317)), 't7').toBe(lessThan(0.017));
+};
+
+tests.nearestPointOnLine = function () {
+  var v = (x,y) => new vector(x,y);
+  expect(nearestPointOnLine(v(1,1), v(2,1), v(5,1)), 't1').toBe(vectorNearTo(v(2,1)));
+  expect(nearestPointOnLine(v(2,1), v(2,1), v(5,1)), 't1').toBe(vectorNearTo(v(2,1)));
+  expect(nearestPointOnLine(v(3,1), v(2,1), v(5,1)), 't1').toBe(vectorNearTo(v(3,1)));
+  expect(nearestPointOnLine(v(3,0), v(2,1), v(5,1)), 't1').toBe(vectorNearTo(v(3,1)));
+  expect(nearestPointOnLine(v(5,1), v(2,1), v(5,1)), 't1').toBe(vectorNearTo(v(5,1)));
+  expect(nearestPointOnLine(v(6,1), v(2,1), v(5,1)), 't1').toBe(vectorNearTo(v(5,1)));
 };
 
 tests.allPointsOnSurfaceAreCoveredByToolpath = function () {

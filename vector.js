@@ -52,6 +52,7 @@ Vector.prototype = {
     return Math.abs(this.dot(v)) > 1-EPS;
   },
   nearTo: function(v, eps) {
+    eps = eps || 1e-5;
     return Math.abs(this.dot(v)) > 1-eps;
   },
   isZero: function(v) {
