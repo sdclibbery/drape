@@ -95,7 +95,8 @@ x GCode generation from toolpath
   x All points on the surface are within a half-tool width of some part of the toolpath
    ! fix failing test
     * Need tests for nearestPointsOnToolpath and nearestPointOnLine
-    ! Also try sphere!
+     Property tests for all these to check that order of args doesnt matter; eg distancetoline(p,a,b) === distancetoline(p,b,a) etc
+    ! Also test sphere!
    * DONT expect bottom to be covered by toolpath
   * All points on the surface are cut to their correct height to within some tolerance
    * Need to include scalloping

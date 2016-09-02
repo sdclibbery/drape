@@ -4,7 +4,7 @@ var vector = require('vector');
 
 return function (surface) {
   var tp = [];
-  var res = 60;
+  var res = 100;
   tp.toolRadius = surface.size / res;
   var size = surface.size;
 
