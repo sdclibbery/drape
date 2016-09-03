@@ -2,6 +2,10 @@ define(function(require) {
 
 var search = {};
 
+search.distanceToLine2D = function (p, a, b) {
+  return search.distanceToLine(p.as2D(), a.as2D(), b.as2D());
+};
+
 search.distanceToLine = function (p, a, b) {
   var nearest = search.nearestPointOnLine(p, a, b);
   return nearest.subtract(p).length();

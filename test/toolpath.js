@@ -31,12 +31,10 @@ tests.allPointsOnSurfaceAreCoveredByToolpath = function (surface) {
     var x = 1*(Math.random()-0.5);
     var y = 1*(Math.random()-0.5);
     var s = surface(x,y);
-    if (!isBottom(s)) {
-      var nearest = search.nearestPointsOnToolpath(s.pos, tp);
-      var distance = search.distanceToLine(s.pos, nearest[0], nearest[1]);
-      var msg = s.pos + " near: " + nearest+' r: '+s.pos.length().toFixed(4);
-      expect(distance, msg).toBe(lessThan(tp.toolRadius));
-    }
+    var nearest = search.nearestPointsOnToolpath(s.pos, tp);
+    var distance = search.distanceToLine2D(s.pos, nearest[0], nearest[1]);
+    var msg = s.pos + " near: " + nearest+' r: '+s.pos.length().toFixed(4);
+    expect(distance, msg).toBe(lessThan(tp.toolRadius));
   }
 };
 
@@ -48,11 +46,9 @@ tests.allPointsOnSurfaceAreCutToCorrectHeight = function (surface) {
     var x = 1*(Math.random()-0.5);
     var y = 1*(Math.random()-0.5);
     var s = surface(x,y);
-    if (!isBottom(s)) {
-      var height = heightFromToolpath(s.pos, tp);
-      var msg = s.pos.toString()+' r: '+s.pos.length().toFixed(4);
-      expect(height, msg).toBe(near(s.pos.z, tolerance));
-    }
+    var height = heightFromToolpath(s.pos, tp);
+    var msg = s.pos.toString()+' r: '+s.pos.length().toFixed(4);
+    expect(height, msg).toBe(near(s.pos.z, tolerance));
   }
 };
 
