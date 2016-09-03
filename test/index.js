@@ -22,3 +22,4 @@ webRequire('test/paths')();
 webRequire('test/primitives')();
 webRequire('test/gcode')();
 webRequire('test/toolpath')();
+webRequire('test/analysis-search')();
