@@ -58,8 +58,7 @@ tests.nearestPointsOnToolpath = function () {
   expect(nearestPointsOnToolpath(v(1,2).pos, tp), 't1').toBe(sameAs([a.pos,b.pos]));
 };
 
-tests.allPointsOnSurfaceAreCoveredByToolpath = function () {
-  var surface = prim.cube(0.8);
+tests.allPointsOnSurfaceAreCoveredByToolpath = function (surface) {
   surface.size = 1;
   var tp = toolpath(surface);
   for (var i=0; i<1000; i++) {
@@ -69,14 +68,14 @@ tests.allPointsOnSurfaceAreCoveredByToolpath = function () {
     if (!isBottom(s)) {
       var nearest = nearestPointsOnToolpath(s.pos, tp);
       var distance = distanceToLine(s.pos, nearest[0], nearest[1]);
-      var msg = s.pos + " near: " + nearest;
+      var msg = s.pos + " near: " + nearest+' r: '+s.pos.length().toFixed(4);
       expect(distance, msg).toBe(lessThan(tp.toolRadius));
     }
   }
 };
 
-tests.allPointsOnSurfaceAreCutToCorrectHeight = function () {
-  var surface = prim.cube(0.8);
+tests.allPointsOnSurfaceAreCutToCorrectHeight = function (surface) {
+  var tolerance = 1e-3;
   surface.size = 1;
   var tp = toolpath(surface);
   for (var i=0; i<1000; i++) {
@@ -85,7 +84,8 @@ tests.allPointsOnSurfaceAreCutToCorrectHeight = function () {
     var s = surface(x,y);
     if (!isBottom(s)) {
       var height = heightFromToolpath(s.pos, tp);
-      expect(height, s.pos.toString()).toBe(near(s.pos.z, 1e-4));
+      var msg = s.pos.toString()+' r: '+s.pos.length().toFixed(4);
+      expect(height, msg).toBe(near(s.pos.z, tolerance));
     }
   }
 };
@@ -128,10 +128,14 @@ var nearestPointsOnToolpath = function (p, toolpath) {
   return bestPoints;
 };
 
+function runTest (name, surfaceName, surface) {
+  console.log('toolpath '+name+' '+surfaceName);
+  tests[name](surface);
+}
 return function () {
   for (name in tests) {
-    console.log('\ntoolpath '+name);
-    tests[name]();
+    runTest(name, 'cube', prim.cube(0.8));
+    runTest(name, 'sphere', prim.sphere(0.4));
   }
 };
 

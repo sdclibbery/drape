@@ -19,6 +19,7 @@ var translate = function (tx, ty, f) {
 
 var surface = csg.union([
 //              prim.cube(0.1),
+//              prim.sphere(0.05),
 //              translate(0.15, 0.15, prim.cube(0.1)),
 //              translate(0.12, 0.12, prim.sphere(0.09)),
 //              translate(0.1, 0.1, prim.cube(0.1)),
@@ -29,6 +30,7 @@ var surface = csg.union([
 surface.size = 0.6;
 
 surface = prim.cube(0.8);
+surface = prim.sphere(0.4);
 surface.size = 1;
 
 return surface;
