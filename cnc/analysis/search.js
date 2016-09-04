@@ -21,14 +21,14 @@ search.nearestPointOnLine = function (p, a, b) {
   return a.add(dir.multiply(param));
 },
 
-search.nearestPointsOnToolpath = function (p, toolpath) {
+search.nearestPointsOnToolpath2D = function (p, toolpath) {
   var bestDistance = Infinity;
   var bestPoints = [];
   toolpath.map(function (_, idx) {
     if (idx === 0) { return; }
     var a = toolpath[idx].pos;
     var b = toolpath[idx-1].pos;
-    var distance = search.distanceToLine(p, a, b);
+    var distance = search.distanceToLine2D(p, a, b);
     if (distance < bestDistance) {
       bestDistance = distance;
       bestPoints = [b, a];

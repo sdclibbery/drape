@@ -44,11 +44,11 @@ tests.nearestPointOnLine = function () {
   expect(search.nearestPointOnLine(v(6,1), v(2,1), v(5,1)), 't6').toBe(sameAs(v(5,1)));
 };
 
-tests.nearestPointsOnToolpath = function () {
+tests.nearestPointsOnToolpath2D = function () {
   var v = (x,y) => ({pos: new vector(x,y)});
   var a=v(1,1), b=v(1,3), c=v(2,3), d=v(2,1);
   var tp = [ a, b, c, d, a ];
-  expect(search.nearestPointsOnToolpath(v(1,2).pos, tp), 't1').toBe(sameAs([a.pos,b.pos]));
+  expect(search.nearestPointsOnToolpath2D(v(1,2).pos, tp), 't1').toBe(sameAs([a.pos,b.pos]));
 };
 
 return function () {

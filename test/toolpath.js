@@ -30,7 +30,7 @@ tests.allPointsOnSurfaceAreCoveredByToolpath2D = function (surface) {
     var x = 1*(Math.random()-0.5);
     var y = 1*(Math.random()-0.5);
     var s = surface(x,y);
-    var nearest = search.nearestPointsOnToolpath(s.pos, tp);
+    var nearest = search.nearestPointsOnToolpath2D(s.pos, tp);
     var distance = search.distanceToLine2D(s.pos, nearest[0], nearest[1]);
     var msg = s.pos + " near: " + nearest+' r: '+s.pos.length().toFixed(4);
     expect(distance, msg).toBe(lessThan(tp.toolRadius));
