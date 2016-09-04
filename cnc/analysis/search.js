@@ -1,17 +1,20 @@
 define(function(require) {
 
-var search = {};
-
-search.distanceToLine2D = function (p, a, b) {
-  return search.distanceToLine(p.as2D(), a.as2D(), b.as2D());
+var search = {
+  line: {},
+  toolpath: {},
 };
 
-search.distanceToLine = function (p, a, b) {
-  var nearest = search.nearestPointOnLine(p, a, b);
+search.line.distance2D = function (p, a, b) {
+  return search.line.distance(p.as2D(), a.as2D(), b.as2D());
+};
+
+search.line.distance = function (p, a, b) {
+  var nearest = search.line.nearestPoint(p, a, b);
   return nearest.subtract(p).length();
 };
 
-search.nearestPointOnLine = function (p, a, b) {
+search.line.nearestPoint = function (p, a, b) {
   var line = b.subtract(a);
   var dir = line.unit();
   var pa = p.subtract(a);
@@ -21,14 +24,14 @@ search.nearestPointOnLine = function (p, a, b) {
   return a.add(dir.multiply(param));
 },
 
-search.nearestPointsOnToolpath2D = function (p, toolpath) {
+search.toolpath.nearestPoints2D = function (p, toolpath) {
   var bestDistance = Infinity;
   var bestPoints = [];
   toolpath.map(function (_, idx) {
     if (idx === 0) { return; }
     var a = toolpath[idx].pos;
     var b = toolpath[idx-1].pos;
-    var distance = search.distanceToLine2D(p, a, b);
+    var distance = search.line.distance2D(p, a, b);
     if (distance < bestDistance) {
       bestDistance = distance;
       bestPoints = [b, a];

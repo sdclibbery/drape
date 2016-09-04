@@ -19,8 +19,6 @@ var expect = function (actual, id) {
 };
 var lessThan = e => (a => ({ result: (a < e), msg: 'expected '+a.toFixed(5)+' to be less than '+e.toFixed(5) }));
 
-function isBottom (s) { return s.pos.z === 0; }
-
 var tests = {};
 
 tests.allPointsOnSurfaceAreCoveredByToolpath2D = function (surface) {
@@ -30,8 +28,8 @@ tests.allPointsOnSurfaceAreCoveredByToolpath2D = function (surface) {
     var x = 1*(Math.random()-0.5);
     var y = 1*(Math.random()-0.5);
     var s = surface(x,y);
-    var nearest = search.nearestPointsOnToolpath2D(s.pos, tp);
-    var distance = search.distanceToLine2D(s.pos, nearest[0], nearest[1]);
+    var nearest = search.toolpath.nearestPoints2D(s.pos, tp);
+    var distance = search.line.distance2D(s.pos, nearest[0], nearest[1]);
     var msg = s.pos + " near: " + nearest+' r: '+s.pos.length().toFixed(4);
     expect(distance, msg).toBe(lessThan(tp.toolRadius));
   }
