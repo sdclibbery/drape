@@ -18,7 +18,6 @@ var expect = function (actual, id) {
   } };
 };
 var lessThan = e => (a => ({ result: (a < e), msg: 'expected '+a.toFixed(5)+' to be less than '+e.toFixed(5) }));
-var near = (e, eps) => (a => ({ result: (abs(a-e) < eps), msg: 'expected '+a.toFixed(5)+' to be near to '+e.toFixed(5) }));
 
 function isBottom (s) { return s.pos.z === 0; }
 
@@ -38,27 +37,6 @@ tests.allPointsOnSurfaceAreCoveredByToolpath = function (surface) {
   }
 };
 
-tests.allPointsOnSurfaceAreCutToCorrectHeight = function (surface) {
-  var tolerance = 1e-3;
-  surface.size = 1;
-  var tp = toolpath(surface);
-  for (var i=0; i<1000; i++) {
-    var x = 1*(Math.random()-0.5);
-    var y = 1*(Math.random()-0.5);
-    var s = surface(x,y);
-    var height = heightFromToolpath(s.pos, tp);
-    var msg = s.pos.toString()+' r: '+s.pos.length().toFixed(4);
-    expect(height, msg).toBe(near(s.pos.z, tolerance));
-  }
-};
-
-var heightFromToolpath = function (p, toolpath) {
-  var nearestToolpathPoints = search.nearestPointsOnToolpath(p, toolpath);
-  var nearestPointOnToolpath = search.nearestPointOnLine(p, nearestToolpathPoints[0], nearestToolpathPoints[1]);
-  // Take tool profile into account; i.e. scalloping
-  return nearestPointOnToolpath.z;
-};
-
 function runTest (name, surfaceName, surface) {
   console.log('toolpath '+name+' '+surfaceName);
   tests[name](surface);
@@ -66,7 +44,7 @@ function runTest (name, surfaceName, surface) {
 return function () {
   for (name in tests) {
     runTest(name, 'cube', prim.cube(0.8));
-//    runTest(name, 'sphere', prim.sphere(0.4));
+    runTest(name, 'sphere', prim.sphere(0.4));
   }
 };
 

@@ -90,23 +90,23 @@ x GCode generation from toolpath
  x Button to export
  x Save a file
  x Generate GCode from toolpath
-* Toolpath analysis (then use these in the toolpath property tests)
- x Toolpath searching module (find nearest point on toolpath 2D/3D)
- * Get cut surface under (2D) point given the toolpath and tool (to include scalloping as well)
- * Get cut surface nearest to (3D) point given the toolpath and tool (to include scalloping as well)
+x Toolpath searching module (find nearest point on toolpath 2D/3D)
+* Delete height test
+* Rename coverage test with 2d
+* Refactor search with fluent names
+* Add ballend tool module
+* Toolpath gen takes a tool
+* Analysis function to find nearest point on cut surface to a point
+* New test that cut surface is close to surface
+* New toolpath gen...
 * Generate tool path that follows surface features
  * Property tests
-  * All points on the surface are within a half-tool width of some part of the toolpath
+  x All points on the surface are within a half-tool width of some part of the toolpath
    x fix failing test
     x Need tests for nearestPointsOnToolpath and nearestPointOnLine
      x Property tests for all these to check that order of args doesnt matter; eg distancetoline(p,a,b) === distancetoline(p,b,a) etc
-   * Should be 2D only
-   * Also test sphere
-  * All points on the surface are cut to their correct height to within some tolerance
-   x Basic test
-   * Need to include the shape and size of the toolpath
-    * Width of tool when not cutting horizontally (eg the cube would actually be cut smaller because of tool radius)
-    * Scalloping
+   x Should be 2D only
+   x Also test sphere
   * The toolpath points along the cutdirection at every point on the surface to within some tolerance
   * On all points the normal of the cut surface is close to the normal of the surface
   * On all points the curvature of the cut surface is close to the curvature of the surface
