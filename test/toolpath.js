@@ -23,7 +23,7 @@ function isBottom (s) { return s.pos.z === 0; }
 
 var tests = {};
 
-tests.allPointsOnSurfaceAreCoveredByToolpath = function (surface) {
+tests.allPointsOnSurfaceAreCoveredByToolpath2D = function (surface) {
   surface.size = 1;
   var tp = toolpath(surface);
   for (var i=0; i<1000; i++) {
