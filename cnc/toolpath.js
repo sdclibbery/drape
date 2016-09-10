@@ -2,11 +2,10 @@ define(function(require) {
 
 var vector = require('vector');
 
-return function (surface) {
+return function (surface, tool) {
   var tp = [];
-  var res = 50;
-  tp.toolRadius = surface.size / res;
-  var size = surface.size;
+  const size = surface.size;
+  const res = Math.floor(size / tool.radius);
 
   for (var y = 0; y <= res; y++) {
     for (var xl = 0; xl <= res; xl++) {

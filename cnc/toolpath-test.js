@@ -1,6 +1,7 @@
 define(function(require) {
 
 var toolpath = require('cnc/toolpath');
+var ballend = require('cnc/tool/ballend');
 var vector = require('vector');
 var prim = require('modelling/primitives');
 var bottom = require('modelling/bottom');
@@ -23,7 +24,8 @@ var tests = {};
 
 tests.allPointsOnSurfaceAreCoveredByToolpath2D = function (surface) {
   surface.size = 1;
-  var tp = toolpath(surface);
+  const toolRadius = 0.1;
+  var tp = toolpath(surface, ballend(toolRadius));
   for (var i=0; i<1000; i++) {
     var x = 1*(Math.random()-0.5);
     var y = 1*(Math.random()-0.5);
@@ -31,7 +33,7 @@ tests.allPointsOnSurfaceAreCoveredByToolpath2D = function (surface) {
     var nearest = search.toolpath.nearestPoints2D(s.pos, tp);
     var distance = search.line.distance2D(s.pos, nearest[0], nearest[1]);
     var msg = s.pos + " near: " + nearest+' r: '+s.pos.length().toFixed(4);
-    expect(distance, msg).toBe(lessThan(tp.toolRadius));
+    expect(distance, msg).toBe(lessThan(toolRadius));
   }
 };
 

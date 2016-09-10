@@ -50,7 +50,7 @@ return function (surface) {
       var xpos = (x - vtxResX/2)*size/vtxResX;
       var ypos = (y - vtxResY/2)*size/vtxResY;
       var s = surface(xpos, ypos);
-      gcodeToGl(vtxPosns, v, s.pos.add(new vector(0,0,-0.003)));
+      gcodeToGl(vtxPosns, v, s.pos.add(new vector(0,0,-size/1000)));
       var c = s.cutDir;
       var p = new vector(c.y, -c.x, 0).unit();
       var sc = delta(surface, s, c);

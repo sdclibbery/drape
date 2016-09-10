@@ -10,6 +10,7 @@ var mouse = require('input/mouse');
 var camera = require('camera');
 var surface = require('surface');
 var toolpath = require('cnc/toolpath');
+var ballend = require('cnc/tool/ballend');
 var gcode = require('cnc/gcode');
 
 var canvas = document.getElementById("canvas");
@@ -24,7 +25,7 @@ var ctxGl = canvas.getContext("webgl");
 if (!ctxGl) { ctxGl = canvas.getContext("experimental-webgl"); }
 if (!ctxGl) { document.getElementById('info').innerHTML = 'WebGL not supported!'; }
 
-var toolpath = toolpath(surface);
+var toolpath = toolpath(surface, ballend(0.005));
 var drawSurface = drawMesh(ctxGl, triangulate(surface));
 var drawCutDir = drawLines(ctxGl, cutDirLines(surface));
 var drawToolPath = drawLines(ctxGl, toolpathLines(toolpath));
