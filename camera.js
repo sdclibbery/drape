@@ -15,11 +15,18 @@ define(function(require) {
   camera.pan = function (dx, dy) {
     this.yaw += dx*0.5;
     this.pitch += dy*0.5;
+    return this;
   };
 
   camera.zoom = function (dz) {
     this.distance -= dz*0.002;
     this.distance = max(min(this.distance, 2), 0.1);
+    return this;
+  };
+
+  camera.distance = function (d) {
+    this.distance = d;
+    return this;
   };
 
   camera.toMatrices = function (cw, ch) {
