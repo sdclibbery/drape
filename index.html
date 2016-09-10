@@ -102,13 +102,11 @@ x Refactor test files to live next to their modules
 x Toolpath gen takes a tool; Add ballend tool module
 x set initial camera zoom for surface size
 x Switch to mm as units
-* Analysis function to find nearest point on cut surface to a point
-* New test that cut surface is close to surface (along normal of surface)
-* New toolpath gen...
-* The toolpath points along the cutdirection at every point on the surface to within some tolerance
-* On all points the normal of the cut surface is close to the normal of the surface
-* On all points the curvature of the cut surface is close to the curvature of the surface
-* Something about length or time of toolpath?
+* Find height maxima
+ x Find highest point on grid
+ * Recursively apply grid search to find approximate peak
+* Trace contour spiralling down around each
+* Stop when reach bottom
 * ? cutdir is same all the way across the profile section; it should surely turn in less near the centreline? ?? Is this true?
 ? Editing...
 * Modify sampling of toolpath: Coalesce samples that have low curvature
