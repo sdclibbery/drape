@@ -90,6 +90,10 @@ x GCode generation from toolpath
  x Button to export
  x Save a file
  x Generate GCode from toolpath
+x Initial toolpath property test
+ x All points on the surface are within a half-tool width of some part of the toolpath
+  x Should be 2D only
+ x Also test sphere
 x Toolpath searching module (find nearest point on toolpath 2D/3D)
 x Delete height test
 x Rename coverage test with 2d and make it fully 2D throughout
@@ -97,22 +101,14 @@ x Refactor search with fluent names
 x Refactor test files to live next to their modules
 x Toolpath gen takes a tool; Add ballend tool module
 x set initial camera zoom for surface size
-? Switch to mm as units??
+x Switch to mm as units
 * Analysis function to find nearest point on cut surface to a point
-* New test that cut surface is close to surface
+* New test that cut surface is close to surface (along normal of surface)
 * New toolpath gen...
-* Generate tool path that follows surface features
- * Property tests
-  x All points on the surface are within a half-tool width of some part of the toolpath
-   x fix failing test
-    x Need tests for nearestPointsOnToolpath and nearestPointOnLine
-     x Property tests for all these to check that order of args doesnt matter; eg distancetoline(p,a,b) === distancetoline(p,b,a) etc
-   x Should be 2D only
-   x Also test sphere
-  * The toolpath points along the cutdirection at every point on the surface to within some tolerance
-  * On all points the normal of the cut surface is close to the normal of the surface
-  * On all points the curvature of the cut surface is close to the curvature of the surface
-  * Something about length or time of toolpath?
+* The toolpath points along the cutdirection at every point on the surface to within some tolerance
+* On all points the normal of the cut surface is close to the normal of the surface
+* On all points the curvature of the cut surface is close to the curvature of the surface
+* Something about length or time of toolpath?
 * ? cutdir is same all the way across the profile section; it should surely turn in less near the centreline? ?? Is this true?
 ? Editing...
 * Modify sampling of toolpath: Coalesce samples that have low curvature
