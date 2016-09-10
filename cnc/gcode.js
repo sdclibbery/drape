@@ -14,7 +14,7 @@ var builder = function () {
 }
 
 var fmt = function (n) {
-  return (n*1000).toFixed(2);
+  return n.toFixed(2);
 }
 
 return function (toolpath) {

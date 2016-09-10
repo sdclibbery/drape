@@ -18,16 +18,16 @@ var translate = function (tx, ty, f) {
 };
 
 var surface = csg.union([
-//              prim.cube(0.1),
-//              prim.sphere(0.05),
-//              translate(0.15, 0.15, prim.cube(0.1)),
-//              translate(0.12, 0.12, prim.sphere(0.09)),
-//              translate(0.1, 0.1, prim.cube(0.1)),
-//              prim.sweep(line(0,0.1, 0,-0.1), ellipse(0.07, 0.07), power(0.25)),
-              prim.sweep(bezier(0.025,0.05, -0.075,0.08, 0.075,-0.08, -0.025,-0.05), ellipse(0.005, 0.0125), power(0.25)),
-              prim.sweep(bezier(0.025,0.05, -0.075,0.08, 0.075,-0.08, -0.025,-0.05), ellipse(0.0125, 0.005), power(0.25)),
+//              prim.cube(100),
+//              prim.sphere(50),
+//              prim.sweep(line(0,100, 0,-100), ellipse(70, 70), power(0.25)),
+//              translate(150, 150, prim.cube(100)),
+//              translate(200, 120, prim.sphere(90)),
+//              translate(100, 100, prim.cube(100)),
+              prim.sweep(bezier(25,50, -75,80, 75,-80, -25,-50), ellipse(5, 12), power(0.25)),
+              prim.sweep(bezier(25,50, -75,80, 75,-80, -25,-50), ellipse(12, 5), power(0.25)),
             ]);
-surface.size = 0.16;
+surface.size = 160;
 
 return surface;
 

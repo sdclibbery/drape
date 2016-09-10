@@ -39,7 +39,7 @@ tests.settings = function () {
 tests.oneCut = function () {
   testGCode([
     cut(0,0,0),
-    cut(0.01,0.01,0)
+    cut(10,10,0)
   ],[
     'G01 X10.00 Y10.00 Z0.00'
   ]);

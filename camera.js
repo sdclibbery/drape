@@ -32,7 +32,7 @@ define(function(require) {
   camera.toMatrices = function (cw, ch) {
     return {
       view: Matrix.arcBallView(-this.distance, this.pitch, this.yaw),
-      perspective: Matrix.perspective(1.1, 0.001, 10, cw, ch)
+      perspective: Matrix.perspective(1.1, 1, 10000, cw, ch)
     };
   };
 
