@@ -18,8 +18,8 @@ define = function(f) {
 //---------
 
 // Test modules
-webRequire('test/paths')();
-webRequire('test/primitives')();
-webRequire('test/gcode')();
-webRequire('test/toolpath')();
-webRequire('test/analysis-search')();
+webRequire('modelling/path/test')();
+webRequire('modelling/primitives-test')();
+webRequire('cnc/gcode-test')();
+webRequire('cnc/toolpath-test')();
+webRequire('cnc/analysis/search-test')();
