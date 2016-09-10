@@ -19,8 +19,7 @@ define(function(require) {
   };
 
   camera.zoom = function (dz) {
-    this.distance -= dz*0.002;
-    this.distance = max(min(this.distance, 2), 0.1);
+    this.distance *= 1 - dz/1000;
     return this;
   };
 
