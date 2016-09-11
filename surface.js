@@ -17,7 +17,7 @@ var translate = function (tx, ty, f) {
   };
 };
 
-var surface = csg.union([
+var surface = translate(0, 0, csg.union([
 //              prim.cube(100),
 //              prim.sphere(50),
 //              prim.sweep(line(0,100, 0,-100), ellipse(70, 70), power(0.25)),
@@ -26,7 +26,7 @@ var surface = csg.union([
 //              translate(100, 100, prim.cube(100)),
               prim.sweep(bezier(25,50, -75,80, 75,-80, -25,-50), ellipse(5, 12), power(0.25)),
               prim.sweep(bezier(25,50, -75,80, 75,-80, -25,-50), ellipse(12, 5), power(0.25)),
-            ]);
+            ]));
 surface.size = 160;
 
 return surface;
