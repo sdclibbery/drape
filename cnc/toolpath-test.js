@@ -3,7 +3,10 @@ define(function(require) {
 var toolpath = require('cnc/toolpath');
 var ballend = require('cnc/tool/ballend');
 var vector = require('vector');
+var bezier = require('modelling/path/bezier');
+var ellipse = require('modelling/profile/ellipse');
 var prim = require('modelling/primitives');
+var power = require('modelling/scale/power');
 var bottom = require('modelling/bottom');
 var search = require('cnc/analysis/search');
 
@@ -19,13 +22,15 @@ var expect = function (actual, id) {
   } };
 };
 var lessThan = e => (a => ({ result: (a < e), msg: 'expected '+a.toFixed(5)+' to be less than '+e.toFixed(5) }));
+var atLeast = e => (a => ({ result: (a >= e), msg: 'expected '+a.toFixed(5)+' to be at least '+e.toFixed(5) }));
 
 var tests = {};
 
 tests.allPointsOnSurfaceAreCoveredByToolpath2D = function (surface) {
-  surface.size = 1;
-  const toolRadius = 0.1;
+  surface.size = 100;
+  const toolRadius = 10;
   var tp = toolpath(surface, ballend(toolRadius));
+  expect(tp.length).toBe(atLeast(2));
   for (var i=0; i<1000; i++) {
     var x = 1*(Math.random()-0.5);
     var y = 1*(Math.random()-0.5);
@@ -43,8 +48,9 @@ function runTest (name, surfaceName, surface) {
 }
 return function () {
   for (name in tests) {
-    runTest(name, 'cube', prim.cube(0.8));
-    runTest(name, 'sphere', prim.sphere(0.4));
+    runTest(name, 'cube', prim.cube(80));
+    runTest(name, 'sphere', prim.sphere(40));
+    runTest(name, 'bezier sweep', prim.sweep(bezier(20,40, -65,70, 65,-70, -20,-40), ellipse(5, 12), power(0.25)));
   }
 };
 

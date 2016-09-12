@@ -20,7 +20,7 @@ var translate = function (tx, ty, f) {
 var surface = translate(0, 0, csg.union([
 //              prim.cube(100),
 //              prim.sphere(50),
-//              prim.sweep(line(0,100, 0,-100), ellipse(70, 70), power(0.25)),
+//              prim.sweep(line(10,70, -10,-70), ellipse(20, 30), power(0.25)),
 //              translate(150, 150, prim.cube(100)),
 //              translate(200, 120, prim.sphere(90)),
 //              translate(100, 100, prim.cube(100)),

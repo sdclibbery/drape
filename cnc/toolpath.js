@@ -7,8 +7,13 @@ return function (surface, tool) {
   var max = gridSampledMaximum(surface, new vector(0,0), surface.size, 10);
   max = gridSampledMaximum(surface, max.as2D(), surface.size/10, 10);
 
-tp.push({ pos: surface(max.x, max.y).pos, });
-tp.push({ pos: surface(max.x, max.y).pos.add(surface(max.x, max.y).cutDir), });
+  var s = surface(max.x, max.y);
+  for (var i = 0; i < 500; i++) {
+    if (s.isBottom) { break; }
+    tp.push({ pos: s.pos, });
+    var newPos = s.pos.add(s.cutDir.multiply(6));
+    s = surface(newPos.x, newPos.y);
+  }
 
   return tp;
 };
