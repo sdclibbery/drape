@@ -28,7 +28,7 @@ var tests = {};
 
 tests.allPointsOnSurfaceAreCoveredByToolpath2D = function (surface) {
   surface.size = 100;
-  const toolRadius = 10;
+  const toolRadius = 5;
   var tp = toolpath(surface, ballend(toolRadius));
   expect(tp.length).toBe(atLeast(2));
   for (var i=0; i<1000; i++) {
