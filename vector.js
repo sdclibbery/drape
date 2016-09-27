@@ -23,6 +23,9 @@ Vector.prototype = {
   as2D: function() {
     return new Vector(this.x, this.y, 0);
   },
+  setZ: function(z) {
+    return new Vector(this.x, this.y, z);
+  },
   add: function(v) {
     if (v instanceof Vector) return new Vector(this.x + v.x, this.y + v.y, this.z + v.z);
     else return new Vector(this.x + v, this.y + v, this.z + v);
