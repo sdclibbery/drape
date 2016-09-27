@@ -25,14 +25,15 @@ function grid (ctr, size, step) {
   return result;
 };
 
-function makeSegments (out, s, i) {
-  if (i%10 == 0) { out.push([]); }
-  out[out.length-1].push(s);
-  return out;
+function makeSegments (segments, s, i) {
+  if (i%10 == 0) { segments.push([]); }
+  //! Look at only combining if in correct direction?
+  segments[segments.length-1].push(s);
+  return segments;
 };
 
-function joinSegments (out, s) {
-  return out.concat(
+function joinSegments (nodes, s) {
+  return nodes.concat(
     {pos:s[0].pos.setZ(80)},
     s,
     {pos:s[s.length-1].pos.setZ(80)}
