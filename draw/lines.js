@@ -16,18 +16,20 @@ var vtxShader = ""
 
 var frgShader = ""
 +"  precision mediump float;"
++"  uniform vec4 colIn;"
 +"  "
 +"  void main() {"
-+"    gl_FragColor = vec4(1,0,1,1);"
++"    gl_FragColor = colIn;"
 +"  }";
 
-return function (gl, lines) {
+return function (gl, lines, r,g,b) {
   var program = null;
   var posAttr = null;
   var posBuf = null;
   var indexBuffer = null;
   var viewUnif = null;
   var perspUnif = null;
+  var colUnif = null;
 
   program = draw.loadProgram(gl, [
     draw.loadShader(gl, vtxShader, gl.VERTEX_SHADER),
@@ -37,6 +39,7 @@ return function (gl, lines) {
   posAttr = gl.getAttribLocation(program, "posIn");
   perspUnif = gl.getUniformLocation(program, "perspIn");
   viewUnif = gl.getUniformLocation(program, "viewIn");
+  colUnif = gl.getUniformLocation(program, "colIn");
   indexBuffer = draw.createIndexBuffer(gl, lines.indexes);
 
   return function (gl, view, perspective) {
@@ -44,6 +47,7 @@ return function (gl, lines) {
 
     gl.uniformMatrix4fv(viewUnif, false, view);
     gl.uniformMatrix4fv(perspUnif, false, perspective.m);
+    gl.uniform4f(colUnif, r,g,b,1);
 
     draw.loadVertexAttrib(gl, posBuf, posAttr, lines.posns, 3);
 

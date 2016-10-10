@@ -27,8 +27,8 @@ if (!ctxGl) { document.getElementById('info').innerHTML = 'WebGL not supported!'
 
 var toolpath = toolpath(surface, tool);
 var drawSurface = drawMesh(ctxGl, triangulate(surface));
-var drawCutDir = drawLines(ctxGl, cutDirLines(surface));
-var drawToolPath = drawLines(ctxGl, toolpathLines(toolpath));
+var drawCutDir = drawLines(ctxGl, cutDirLines(surface), 0,0.7,0.7);
+var drawToolPath = drawLines(ctxGl, toolpathLines(toolpath), 1,0,1);
 var render = function () {
   var ms = camera.toMatrices(canvas.width, canvas.height);
   drawSurface(ctxGl, ms.view, ms.perspective);
