@@ -5,9 +5,10 @@ var vector = require('vector');
 return function (surface, tool) {
   var tp = [];
 
-  grid(new vector(0,0), surface.size, tool.radius)
-    .map(v => surface(v.x, v.y)).filter(s => !s.isBottom)
-    .reduce(makeSegments, [[]])
+  var nodes = grid(new vector(0,0), surface.size, tool.radius)
+    .map(v => surface(v.x, v.y)).filter(s => !s.isBottom);
+
+  makeSegments(nodes)
     .filter(a => a.length).reduce(joinSegments, [])
     .map(s => tp.push({ pos: s.pos, }));
 
@@ -25,11 +26,38 @@ function grid (ctr, size, step) {
   return result;
 };
 
-function makeSegments (segments, s, i) {
-  if (i%10 == 0) { segments.push([]); }
-  //! Look at only combining if in correct direction?
-  segments[segments.length-1].push(s);
+function makeSegments (nodes) {
+  var segments = [];
+  segments.push(traceSegment(nodes));
   return segments;
+};
+
+function traceSegment (nodes) {
+  var segment = [];
+  var node = takeNode(nodes, 0);
+  do {
+    segment.push(node);
+    node = nextNode(nodes, segment[segment.length-1]);
+  } while (node);
+  return segment;
+};
+
+function nextNode (nodes, current) {
+  var bestIdx, best = -0.5;
+  nodes.map(function (node, idx) {
+    var delta = current.pos.subtract(node.pos);
+    var projection = delta.unit().dot(current.cutDir);
+    if (delta.length() < 5 && projection > best) {
+      best = projection;
+      bestIdx = idx;
+    }
+  });
+  if (!bestIdx) { return; }
+  return takeNode(nodes, bestIdx);
+};
+
+function takeNode (nodes, idx) {
+  return nodes.splice(idx, 1)[0];
 };
 
 function joinSegments (nodes, s) {
