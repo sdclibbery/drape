@@ -28,7 +28,10 @@ function grid (ctr, size, step) {
 
 function makeSegments (nodes) {
   var segments = [];
-  segments.push(traceSegment(nodes));
+  var len = nodes.length;
+  while (nodes.length) {
+    segments.push(traceSegment(nodes));
+  }
   return segments;
 };
 
@@ -45,8 +48,8 @@ function traceSegment (nodes) {
 function nextNode (nodes, current) {
   var bestIdx, best = -0.5;
   nodes.map(function (node, idx) {
-    var delta = current.pos.subtract(node.pos);
-    var projection = delta.unit().dot(current.cutDir);
+    var delta = current.pos.as2D().subtract(node.pos.as2D());
+    var projection = Math.abs(delta.unit().dot(current.cutDir)); // !! Needs to be able to go both directions...
     if (delta.length() < 5 && projection > best) {
       best = projection;
       bestIdx = idx;
