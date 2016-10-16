@@ -46,11 +46,12 @@ function traceSegment (nodes) {
 };
 
 function nextNode (nodes, current) {
-  var bestIdx, best = -0.5;
+  var bestIdx = undefined;
+  var best = 0;
   nodes.map(function (node, idx) {
     var delta = current.pos.as2D().subtract(node.pos.as2D());
-    var projection = Math.abs(delta.unit().dot(current.cutDir)); // !! Needs to be able to go both directions...
-    if (delta.length() < 5 && projection > best) {
+    var projection = Math.abs(delta.dot(current.cutDir)); // !! Needs to be able to go both directions...
+    if (delta.length() < 8 && projection > best) {
       best = projection;
       bestIdx = idx;
     }
