@@ -6,7 +6,8 @@ return function (surface, tool) {
   var tp = [];
 
   var nodes = grid(new vector(0,0), surface.size, tool.radius)
-    .map(v => surface(v.x, v.y)).filter(s => !s.isBottom);
+    .map(v => surface(v.x, v.y))
+    .filter(s => !s.isBottom); // Keep in if it has a neighbour thats not bottom!
 
   makeSegments(nodes)
     .filter(a => a.length).reduce(joinSegments, [])
@@ -50,7 +51,7 @@ function nextNode (nodes, current) {
   var best = 0;
   nodes.map(function (node, idx) {
     var delta = current.pos.as2D().subtract(node.pos.as2D());
-    var projection = Math.abs(delta.dot(current.cutDir)); // !! Needs to be able to go both directions...
+    var projection = Math.abs(delta.dot(current.cutDir));
     if (delta.length() < 8 && projection > best) {
       best = projection;
       bestIdx = idx;
